@@ -1,0 +1,9 @@
+*.js text eol=lf
+*.ts text eol=lf
+.gitattributes text eol=lf
+.editorconfig text eol=lf
+.eslintrc text eol=lf
+.gitignore text eol=lf
+*.json text eol=lf
+*.lock text eol=lf
+
