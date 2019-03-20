@@ -95,7 +95,7 @@ class Index extends Component {
         <View>
           <Text>Hello, World</Text>
         </View>
-        <a href="https://unihearti.b2clogin.com/unihearti.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_tictactoe&client_id=bacb8d3b-6ee0-4443-9bea-b54485a5a20d&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A10086%2Fidentified&scope=openid&response_type=id_token&prompt=login">
+        <a href="https://unihearti.b2clogin.com/unihearti.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_tictactoe&client_id=bacb8d3b-6ee0-4443-9bea-b54485a5a20d&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A10086%2Fpages%2Fidentified%2Findex&scope=openid&response_type=id_token&prompt=login">
           登录
         </a>
       </View>

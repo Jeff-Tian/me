@@ -1,6 +1,6 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Button, Text } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 
 type PageStateProps = {};
@@ -13,7 +13,7 @@ type PageState = {};
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-interface Identified {
+interface Index {
   props: IProps;
 }
 
@@ -21,7 +21,7 @@ interface Identified {
   ({}) => ({}),
   () => ({})
 )
-class Identified extends Component {
+class Index extends Component {
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -56,4 +56,4 @@ class Identified extends Component {
   }
 }
 
-export default Identified as ComponentClass<PageOwnProps, PageState>;
+export default Index as ComponentClass<PageOwnProps, PageState>;
