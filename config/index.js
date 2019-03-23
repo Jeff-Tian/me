@@ -87,7 +87,8 @@ const config = {
   }
 };
 
-module.exports = function(merge) {
+module.exports = function (merge) {
+  console.log('prod ========================= ', process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));
   }
