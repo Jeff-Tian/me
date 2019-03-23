@@ -3,9 +3,10 @@ import Taro, {Component, Config} from "@tarojs/taro";
 import {Button, Text, View} from "@tarojs/components";
 import {connect} from "@tarojs/redux";
 
-import {add, asyncAdd, login, minus} from "../../actions/counter";
+import {add, asyncAdd, login, logout, minus} from "../../actions/counter";
 
 import "./index.styl";
+import User from "../../services/user";
 
 // #region 书写注意
 //
@@ -28,6 +29,7 @@ type PageDispatchProps = {
   dec: () => void;
   asyncAdd: () => any;
   login: () => void;
+  logout: () => void;
 };
 
 type PageOwnProps = {};
@@ -54,8 +56,11 @@ interface Index {
     asyncAdd() {
       dispatch(asyncAdd());
     },
-    login(){
-      dispatch(login())
+    login() {
+      dispatch(login());
+    },
+    logout() {
+      dispatch(logout());
     }
   })
 )
@@ -79,6 +84,11 @@ class Index extends Component {
   }
 
   componentDidShow() {
+    let user = User.get();
+    console.log('user = ', user)
+    if (user) {
+      console.log('logged in')
+    }
   }
 
   componentDidHide() {
@@ -99,16 +109,15 @@ class Index extends Component {
         <Button className="dec_btn" onClick={this.props.login}>
           Login
         </Button>
+        <Button className="dec_btn" onClick={this.props.logout}>
+          Logout
+        </Button>
         <View>
           <Text>{this.props.counter.num}</Text>
         </View>
         <View>
           <Text>Hello, World</Text>
         </View>
-        <a
-          href="https://unihearti.b2clogin.com/unihearti.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_tictactoe&client_id=bacb8d3b-6ee0-4443-9bea-b54485a5a20d&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A10086%2Fpages%2Fidentified%2Findex&scope=openid&response_type=id_token&prompt=login">
-          登录
-        </a>
       </View>
     );
   }

@@ -1,7 +1,4 @@
-import {
-  ADD, LOGIN,
-  MINUS
-} from '../constants/counter'
+import {ADD, LOGIN, LOGOUT, MINUS} from '../constants/counter'
 
 export const add = () => {
   return {
@@ -15,7 +12,7 @@ export const minus = () => {
 }
 
 // 异步的action
-export function asyncAdd () {
+export function asyncAdd() {
   return dispatch => {
     setTimeout(() => {
       dispatch(add())
@@ -23,8 +20,14 @@ export function asyncAdd () {
   }
 }
 
-export const login=()=>{
+export const login = () => {
   return {
     type: LOGIN
+  }
+}
+
+export const logout = () => {
+  return {
+    type: LOGOUT
   }
 }
