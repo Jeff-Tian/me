@@ -88,6 +88,8 @@ class Index extends Component {
     console.log('user = ', user)
     if (user) {
       console.log('logged in')
+    } else {
+      console.log('not logged in')
     }
   }
 
