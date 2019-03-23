@@ -1,5 +1,5 @@
 import {
-  ADD,
+  ADD, LOGIN,
   MINUS
 } from '../constants/counter'
 
@@ -20,5 +20,11 @@ export function asyncAdd () {
     setTimeout(() => {
       dispatch(add())
     }, 2000)
+  }
+}
+
+export const login=()=>{
+  return {
+    type: LOGIN
   }
 }

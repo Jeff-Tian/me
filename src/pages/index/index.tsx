@@ -1,9 +1,9 @@
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Button, Text } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import {ComponentClass} from "react";
+import Taro, {Component, Config} from "@tarojs/taro";
+import {Button, Text, View} from "@tarojs/components";
+import {connect} from "@tarojs/redux";
 
-import { add, minus, asyncAdd } from "../../actions/counter";
+import {add, asyncAdd, login, minus} from "../../actions/counter";
 
 import "./index.styl";
 
@@ -27,6 +27,7 @@ type PageDispatchProps = {
   add: () => void;
   dec: () => void;
   asyncAdd: () => any;
+  login: () => void;
 };
 
 type PageOwnProps = {};
@@ -40,7 +41,7 @@ interface Index {
 }
 
 @connect(
-  ({ counter }) => ({
+  ({counter}) => ({
     counter
   }),
   dispatch => ({
@@ -52,6 +53,9 @@ interface Index {
     },
     asyncAdd() {
       dispatch(asyncAdd());
+    },
+    login(){
+      dispatch(login())
     }
   })
 )
@@ -71,11 +75,14 @@ class Index extends Component {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+  }
 
-  componentDidShow() {}
+  componentDidShow() {
+  }
 
-  componentDidHide() {}
+  componentDidHide() {
+  }
 
   render() {
     return (
@@ -89,13 +96,17 @@ class Index extends Component {
         <Button className="dec_btn" onClick={this.props.asyncAdd}>
           async
         </Button>
+        <Button className="dec_btn" onClick={this.props.login}>
+          Login
+        </Button>
         <View>
           <Text>{this.props.counter.num}</Text>
         </View>
         <View>
           <Text>Hello, World</Text>
         </View>
-        <a href="https://unihearti.b2clogin.com/unihearti.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_tictactoe&client_id=bacb8d3b-6ee0-4443-9bea-b54485a5a20d&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A10086%2Fpages%2Fidentified%2Findex&scope=openid&response_type=id_token&prompt=login">
+        <a
+          href="https://unihearti.b2clogin.com/unihearti.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_tictactoe&client_id=bacb8d3b-6ee0-4443-9bea-b54485a5a20d&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A10086%2Fpages%2Fidentified%2Findex&scope=openid&response_type=id_token&prompt=login">
           登录
         </a>
       </View>
