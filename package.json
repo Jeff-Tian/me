@@ -18,8 +18,9 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "dev:rn": "npm run build:rn -- --watch"
   },
-  "author": "",
+  "author": "jeff.tian@outlook.com",
   "license": "MIT",
+  "homepage": "https://jeff-tian.github.io/me/",
   "dependencies": {
     "@tarojs/async-await": "1.2.15",
     "@tarojs/components": "1.2.15",
