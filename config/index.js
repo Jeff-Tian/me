@@ -26,9 +26,6 @@ const config = {
         "transform-object-rest-spread"
       ]
     },
-    uglify: {
-      enable: false
-    }
   },
   defineConstants: {},
   copy: {
