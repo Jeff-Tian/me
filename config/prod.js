@@ -1,3 +1,5 @@
+let url = new URL(require('../package.json').homepage);
+
 module.exports = {
   env: {
     NODE_ENV: '"production"'
@@ -5,6 +7,9 @@ module.exports = {
   defineConstants: {},
   weapp: {},
   h5: {
-    publicPath: new URL(require('../package.json').homepage).pathname
+    publicPath: url.pathname,
+    router: {
+      basename: url.pathname
+    }
   }
 }
