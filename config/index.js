@@ -25,7 +25,7 @@ const config = {
         "transform-class-properties",
         "transform-object-rest-spread"
       ]
-    },
+    }
   },
   defineConstants: {},
   copy: {
@@ -83,12 +83,13 @@ const config = {
     },
     router: {
       mode: "browser"
-    }
+    },
+    esnextModules: ["taro-ui"]
   }
 };
 
-module.exports = function (merge) {
-  console.log('prod ========================= ', process.env.NODE_ENV);
+module.exports = function(merge) {
+  console.log("prod ========================= ", process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));
   }

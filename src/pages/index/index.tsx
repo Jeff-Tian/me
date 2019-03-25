@@ -1,9 +1,11 @@
-import {ComponentClass} from "react";
-import Taro, {Component, Config} from "@tarojs/taro";
-import {Button, Text, View} from "@tarojs/components";
-import {connect} from "@tarojs/redux";
+import { ComponentClass } from "react";
+import Taro, { Component, Config } from "@tarojs/taro";
+import { Button, Text, View } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
+import { AtNavBar } from "taro-ui";
+import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 
-import {add, asyncAdd, login, logout, minus} from "../../actions/counter";
+import { add, asyncAdd, login, logout, minus } from "../../actions/counter";
 
 import "./index.styl";
 import User from "../../services/user";
@@ -43,7 +45,7 @@ interface Index {
 }
 
 @connect(
-  ({counter}) => ({
+  ({ counter }) => ({
     counter
   }),
   dispatch => ({
@@ -80,25 +82,38 @@ class Index extends Component {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   componentDidShow() {
     let user = User.get();
-    console.log('user = ', user)
+    console.log("user = ", user);
     if (user) {
-      console.log('logged in')
+      console.log("logged in");
     } else {
-      console.log('not logged in')
+      console.log("not logged in");
     }
   }
 
-  componentDidHide() {
+  componentDidHide() {}
+
+  handleClick() {
+    console.log(arguments);
   }
 
   render() {
     return (
       <View className="index">
+        <AtNavBar
+          onClickRgIconSt={this.handleClick}
+          onClickRgIconNd={this.handleClick}
+          onClickLeftIcon={this.handleClick}
+          color="#000"
+          title="NavBar 导航栏示例"
+          leftText="返回"
+          leftIconType="chevron-left"
+          rightFirstIconType="bullet-list"
+          rightSecondIconType="user"
+        />
         <Button className="add_btn" onClick={this.props.add}>
           +
         </Button>
