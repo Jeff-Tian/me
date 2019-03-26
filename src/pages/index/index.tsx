@@ -1,11 +1,11 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { Button, Text, View } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { AtNavBar } from "taro-ui";
+import { AtNavBar, AtButton } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 
-import { add, asyncAdd, login, logout, minus } from "../../actions/counter";
+import { login, logout } from "../../actions/login";
 
 import "./index.styl";
 import User from "../../services/user";
@@ -21,15 +21,10 @@ import User from "../../services/user";
 // #endregion
 
 type PageStateProps = {
-  counter: {
-    num: number;
-  };
+  index: { loading: false };
 };
 
 type PageDispatchProps = {
-  add: () => void;
-  dec: () => void;
-  asyncAdd: () => any;
   login: () => void;
   logout: () => void;
 };
@@ -45,19 +40,10 @@ interface Index {
 }
 
 @connect(
-  ({ counter }) => ({
-    counter
+  ({ index }) => ({
+    index
   }),
   dispatch => ({
-    add() {
-      dispatch(add());
-    },
-    dec() {
-      dispatch(minus());
-    },
-    asyncAdd() {
-      dispatch(asyncAdd());
-    },
     login() {
       dispatch(login());
     },
@@ -108,30 +94,29 @@ class Index extends Component {
           onClickRgIconNd={this.handleClick}
           onClickLeftIcon={this.handleClick}
           color="#000"
-          title="NavBar 导航栏示例"
+          title="我的个人中心"
           leftText="返回"
           leftIconType="chevron-left"
           rightFirstIconType="bullet-list"
           rightSecondIconType="user"
         />
-        <Button className="add_btn" onClick={this.props.add}>
-          +
-        </Button>
-        <Button className="dec_btn" onClick={this.props.dec}>
-          -
-        </Button>
-        <Button className="dec_btn" onClick={this.props.asyncAdd}>
-          async
-        </Button>
-        <Button className="dec_btn" onClick={this.props.login}>
-          Login
-        </Button>
-        <Button className="dec_btn" onClick={this.props.logout}>
+
+        <br />
+        <AtButton
+          type="primary"
+          onClick={this.props.login}
+          loading={this.props.index.loading}
+        >
+          登录
+        </AtButton>
+        <br />
+        <AtButton
+          type="primary"
+          onClick={this.props.logout}
+          loading={this.props.index.loading}
+        >
           Logout
-        </Button>
-        <View>
-          <Text>{this.props.counter.num}</Text>
-        </View>
+        </AtButton>
         <View>
           <Text>Hello, World</Text>
         </View>
