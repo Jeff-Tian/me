@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT} from '../constants/login'
+import { LOGIN, LOGOUT, SET_USER } from '../constants/login'
 
 export const login = () => {
   return {
@@ -9,5 +9,12 @@ export const login = () => {
 export const logout = () => {
   return {
     type: LOGOUT
+  }
+}
+
+export const setUser = (user)=>{
+  return {
+    type: SET_USER,
+    user
   }
 }

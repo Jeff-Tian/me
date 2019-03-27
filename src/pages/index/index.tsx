@@ -2,10 +2,9 @@ import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { AtNavBar, AtButton } from "taro-ui";
+import { AtButton, AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
-
-import { login, logout } from "../../actions/login";
+import { login, logout, setUser } from "../../actions/login";
 
 import "./index.styl";
 import User from "../../services/user";
@@ -21,12 +20,13 @@ import User from "../../services/user";
 // #endregion
 
 type PageStateProps = {
-  index: { loading: false };
+  index: { loading: false; user: null };
 };
 
 type PageDispatchProps = {
   login: () => void;
   logout: () => void;
+  setUser: (user) => void;
 };
 
 type PageOwnProps = {};
@@ -49,6 +49,9 @@ interface Index {
     },
     logout() {
       dispatch(logout());
+    },
+    setUser(user) {
+      dispatch(setUser(user));
     }
   })
 )
@@ -61,7 +64,7 @@ class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: "首页"
+    navigationBarTitleText: "我的个人中心"
   };
 
   componentWillReceiveProps(nextProps) {
@@ -71,13 +74,7 @@ class Index extends Component {
   componentWillUnmount() {}
 
   componentDidShow() {
-    let user = User.get();
-    console.log("user = ", user);
-    if (user) {
-      console.log("logged in");
-    } else {
-      console.log("not logged in");
-    }
+    this.props.setUser(User.get());
   }
 
   componentDidHide() {}
@@ -102,21 +99,23 @@ class Index extends Component {
         />
 
         <br />
-        <AtButton
-          type="primary"
-          onClick={this.props.login}
-          loading={this.props.index.loading}
-        >
-          登录
-        </AtButton>
-        <br />
-        <AtButton
-          type="primary"
-          onClick={this.props.logout}
-          loading={this.props.index.loading}
-        >
-          Logout
-        </AtButton>
+        {!this.props.index.user ? (
+          <AtButton
+            type="primary"
+            onClick={this.props.login}
+            loading={this.props.index.loading}
+          >
+            登录
+          </AtButton>
+        ) : (
+          <AtButton
+            type="primary"
+            onClick={this.props.logout}
+            loading={this.props.index.loading}
+          >
+            Logout
+          </AtButton>
+        )}
         <View>
           <Text>Hello, World</Text>
         </View>
