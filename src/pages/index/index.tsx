@@ -8,6 +8,7 @@ import { login, logout, setUser } from "../../actions/login";
 
 import "./index.styl";
 import User from "../../services/user";
+import LoggedIn from "../../components/logged-in";
 
 // #region 书写注意
 //
@@ -108,17 +109,17 @@ class Index extends Component {
             登录
           </AtButton>
         ) : (
-          <AtButton
-            type="primary"
-            onClick={this.props.logout}
-            loading={this.props.index.loading}
-          >
-            Logout
-          </AtButton>
+          <View>
+            <LoggedIn user={this.props.index.user} />
+            <AtButton
+              type="primary"
+              onClick={this.props.logout}
+              loading={this.props.index.loading}
+            >
+              Logout
+            </AtButton>
+          </View>
         )}
-        <View>
-          <Text>Hello, World</Text>
-        </View>
       </View>
     );
   }
