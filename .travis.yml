@@ -9,12 +9,6 @@ cache:
 
 script:
   - npm run build
-  - ACCESS_TOKEN=e21f97ba7cc247b188de7014b014fdd7 &&  ENVIRONMENT=production &&   LOCAL_USERNAME=`travis` &&
-    REVISION=`git rev-parse --verify HEAD` && curl https://api.rollbar.com/api/1/deploy/ \
-    -F access_token=$ACCESS_TOKEN \
-    -F environment=$ENVIRONMENT \
-    -F revision=$REVISION \
-    -F local_username=$LOCAL_USERNAME
 
 deploy:
   - provider: pages
