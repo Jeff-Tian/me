@@ -1,6 +1,6 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { Text, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtButton, AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一

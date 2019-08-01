@@ -45,6 +45,7 @@
     "@tarojs/cli": "1.2.17",
     "@tarojs/plugin-babel": "1.2.15",
     "@tarojs/plugin-csso": "1.2.15",
+    "@tarojs/plugin-sass": "^1.3.11",
     "@tarojs/plugin-stylus": "1.2.15",
     "@tarojs/plugin-uglifyjs": "1.2.15",
     "@tarojs/webpack-runner": "1.2.15",
