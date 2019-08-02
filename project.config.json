@@ -1,8 +1,8 @@
 {
 	"miniprogramRoot": "dist/",
 	"projectname": "me",
-	"description": "",
-	"appid": "touristappid",
+	"description": "哈德韦",
+	"appid": "wx8c777d630f2b78e3",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,

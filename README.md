@@ -18,3 +18,9 @@ $ yarn global add @tarojs/cli
 ```
 $ taro build --type weapp --watch
 ```
+
+## 线上预览
+
+|             网页版              |                        小程序                         |
+| :-----------------------------: | :---------------------------------------------------: |
+| https://jeff-tian.github.io/me/ | ![小程序二维码](./src/images/gh_e56e6784a430_258.jpg) |
