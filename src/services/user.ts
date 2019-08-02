@@ -29,14 +29,22 @@ if (process.env.TARO_ENV === "h5") {
     },
 
     loginRedirect: function() {
-      console.log("hello", this.wx, this.$scope);
       Taro.login({
         timeout: 3000
       })
         .then(async res => {
-          console.log(res);
           await Taro.showToast({
             title: "login 结果：" + JSON.stringify(res),
+            duration: 20000,
+            icon: "none"
+          });
+
+          const response = await Taro.request({
+            url: `https://uniheart.pa-ca.me/wechat-dev/code_2_session?code=${res.code}`
+          });
+
+          await Taro.showToast({
+            title: "code2Session 结果：" + JSON.stringify(response),
             duration: 20000,
             icon: "none"
           });
