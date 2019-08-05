@@ -35,17 +35,17 @@ if (process.env.TARO_ENV === "h5") {
         .then(async res => {
           await Taro.showToast({
             title: "login 结果：" + JSON.stringify(res),
-            duration: 20000,
+            duration: 2000,
             icon: "none"
           });
 
           const response = await Taro.request({
-            url: `https://uniheart.pa-ca.me/wechat-dev/code_2_session?code=${res.code}`
+            url: `https://uniheart.pa-ca.me/wechat-dev/code_2_session?code=${res.code}&select=passportWechatMiniProgramHardway`
           });
 
           await Taro.showToast({
-            title: "code2Session 结果：" + JSON.stringify(response),
-            duration: 20000,
+            title: "code2Session 结果：" + JSON.stringify(response.data),
+            duration: 25000,
             icon: "none"
           });
         })
