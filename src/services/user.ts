@@ -1,79 +1,82 @@
-import { UserAgentApplication } from "msal";
-import * as Taro from "@tarojs/taro";
+import { UserAgentApplication } from 'msal'
+import * as Taro from '@tarojs/taro'
 
-let userAgentApp: any;
-let applicationConfig: any;
-if (process.env.TARO_ENV === "h5") {
+let userAgentApp: any
+let applicationConfig: any
+if (process.env.TARO_ENV === 'h5') {
   applicationConfig = {
-    clientID: "bacb8d3b-6ee0-4443-9bea-b54485a5a20d",
+    clientID: 'bacb8d3b-6ee0-4443-9bea-b54485a5a20d',
     authority:
-      "https://login.microsoftonline.com/tfp/unihearti.onmicrosoft.com/B2C_1_tictactoe",
-    b2cScopes: ["https://unihearti.onmicrosoft.com/hello/demo.read"]
-  };
+      'https://login.microsoftonline.com/tfp/unihearti.onmicrosoft.com/B2C_1_tictactoe',
+    b2cScopes: ['https://unihearti.onmicrosoft.com/hello/demo.read'],
+  }
 
   userAgentApp = new UserAgentApplication(
     applicationConfig.clientID,
     applicationConfig.authority,
     (errorDesc, token, error, tokenType) => {
-      console.log(errorDesc, token, error, tokenType);
-    }
-  );
+      console.log(errorDesc, token, error, tokenType)
+    },
+  )
 } else {
   applicationConfig = {
-    b2cScopes: []
-  };
+    b2cScopes: [],
+  }
 
   userAgentApp = {
     getUser: function() {
-      return null;
+      return null
     },
 
     loginRedirect: function() {
       Taro.login({
-        timeout: 3000
+        timeout: 3000,
       })
         .then(async res => {
           await Taro.showToast({
-            title: "login 结果：" + JSON.stringify(res),
+            title: 'login 结果：' + JSON.stringify(res),
             duration: 2000,
-            icon: "none"
-          });
+            icon: 'none',
+          })
 
           const response = await Taro.request({
-            url: `https://uniheart.pa-ca.me/wechat-dev/code_2_session?code=${res.code}&select=passportWechatMiniProgramHardway`
-          });
+            url: `https://uniheart.pa-ca.me/wechat-dev/code_2_session?code=${res.code}&select=passportWeapp`,
+          })
 
+          let wechatInfo = JSON.stringify(response.data)
           await Taro.showToast({
-            title: "code2Session 结果：" + JSON.stringify(response.data),
+            title: 'code2Session 结果：' + wechatInfo,
             duration: 25000,
-            icon: "none"
-          });
+            icon: 'none',
+          })
+
+
         })
         .catch(async error => {
-          console.error(error);
+          console.error(error)
 
           await Taro.showToast({
-            title: "login 失败：" + JSON.stringify(error)
-          });
-        });
-    }
-  };
+            title: 'login 失败：' + JSON.stringify(error),
+          })
+        })
+    },
+  }
 }
 
 export default class User {
   static getAgent() {
-    return userAgentApp;
+    return userAgentApp
   }
 
   static get() {
-    return userAgentApp.getUser();
+    return userAgentApp.getUser()
   }
 
   static login() {
-    userAgentApp.loginRedirect(applicationConfig.b2cScopes);
+    userAgentApp.loginRedirect(applicationConfig.b2cScopes)
   }
 
   static logout() {
-    userAgentApp.logout();
+    userAgentApp.logout()
   }
 }
