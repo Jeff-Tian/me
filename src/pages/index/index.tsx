@@ -47,9 +47,12 @@ interface Index {
   dispatch => ({
     login() {
       dispatch(login());
+      User.login().then(user => dispatch(setUser(user)));
     },
     logout() {
       dispatch(logout());
+      User.logout();
+      dispatch(setUser(null));
     },
     setUser(user) {
       dispatch(setUser(user));
@@ -101,21 +104,13 @@ class Index extends Component {
 
         <br />
         {!this.props.index.user ? (
-          <AtButton
-            type="primary"
-            onClick={this.props.login}
-            loading={this.props.index.loading}
-          >
+          <AtButton type="primary" onClick={this.props.login} loading={this.props.index.loading}>
             登录
           </AtButton>
         ) : (
           <View>
             <LoggedIn user={this.props.index.user} />
-            <AtButton
-              type="primary"
-              onClick={this.props.logout}
-              loading={this.props.index.loading}
-            >
+            <AtButton type="primary" onClick={this.props.logout} loading={this.props.index.loading}>
               Logout
             </AtButton>
           </View>

@@ -1,7 +1,7 @@
 import { UserAgentApplication } from "msal";
 import Taro from "@tarojs/taro";
 import { setUser } from "../actions/login";
-import Store from '../store/test'
+import Store from '../store'
 
 let userAgentApp: any;
 let applicationConfig: any;
@@ -38,7 +38,7 @@ if (process.env.TARO_ENV === "h5") {
     },
 
     loginRedirect: function () {
-      Taro.login({
+      return Taro.login({
         timeout: 3000
       })
         .then(async res => {
