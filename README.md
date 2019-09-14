@@ -23,4 +23,4 @@ $ taro build --type weapp --watch
 
 |             网页版              |                        小程序                         |                             小程序体验版                             |
 | :-----------------------------: | :---------------------------------------------------: | :------------------------------------------------------------------: |
-| https://jeff-tian.github.io/me/ | ![小程序二维码](./src/images/gh_e56e6784a430_258.jpg) | ![小程序体验版二维码](./src/images/odrHN4lVhrjiktR18jU8Hn1Z2chY.jpg) |
+| https://jeff-tian.github.io/me/ | ![小程序二维码](./src/images/gh_e56e6784a430_258.jpg) | ![小程序体验版二维码](./src/images/odrHN4p1UMWRdQfMK4xm9dtQXvf8.jpg) |
