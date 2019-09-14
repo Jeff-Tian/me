@@ -25,7 +25,7 @@ if (process.env.TARO_ENV === "h5") {
 
   userAgentApp = {
     getUser: function() {
-      return null;
+      return Taro.getStorageSync('userInfo');
     },
 
     loginRedirect: function() {
@@ -33,22 +33,18 @@ if (process.env.TARO_ENV === "h5") {
         timeout: 3000
       })
         .then(async res => {
-          await Taro.showToast({
-            title: "login 结果：" + JSON.stringify(res),
-            duration: 2000,
-            icon: "none"
-          });
-
           const response = await Taro.request({
             url: `https://uniheart.pa-ca.me/passport/weapp/callback?code=${res.code}`
           });
 
           let wechatInfo = JSON.stringify(response.data);
-          await Taro.showToast({
-            title: "code2Session 结果：" + wechatInfo,
-            duration: 25000,
-            icon: "none"
-          });
+          // await Taro.showToast({
+          //   title: "用户数据：" + wechatInfo,
+          //   duration: 25000,
+          //   icon: "none"
+          // });
+
+          Taro.setStorageSync('userInfo',  wechatInfo)
         })
         .catch(async error => {
           console.error(error);
