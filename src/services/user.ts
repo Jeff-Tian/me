@@ -1,5 +1,7 @@
 import { UserAgentApplication } from "msal";
-import * as Taro from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { setUser } from "../actions/login";
+import Store from '../store/test'
 
 let userAgentApp: any;
 let applicationConfig: any;
@@ -23,12 +25,19 @@ if (process.env.TARO_ENV === "h5") {
     b2cScopes: []
   };
 
+  const store = Store()
+
   userAgentApp = {
-    getUser: function() {
+    getUser: function () {
       return Taro.getStorageSync('userInfo');
     },
 
-    loginRedirect: function() {
+    logout: () => {
+      Taro.setStorageSync('userInfo', null);
+      store.dispatch(setUser(null));
+    },
+
+    loginRedirect: function () {
       Taro.login({
         timeout: 3000
       })
@@ -43,8 +52,10 @@ if (process.env.TARO_ENV === "h5") {
           //   duration: 25000,
           //   icon: "none"
           // });
+          store.dispatch(setUser(wechatInfo))
 
-          Taro.setStorageSync('userInfo',  wechatInfo)
+          Taro.setStorageSync('userInfo', wechatInfo)
+          return wechatInfo;
         })
         .catch(async error => {
           console.error(error);
@@ -67,7 +78,7 @@ export default class User {
   }
 
   static login() {
-    userAgentApp.loginRedirect(applicationConfig.b2cScopes);
+    return userAgentApp.loginRedirect(applicationConfig.b2cScopes);
   }
 
   static logout() {
