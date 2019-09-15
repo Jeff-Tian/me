@@ -1,6 +1,6 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, WebView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtButton, AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
@@ -28,6 +28,7 @@ type PageDispatchProps = {
   login: () => void;
   logout: () => void;
   setUser: (user) => void;
+  citiLogin: () => void;
 };
 
 type PageOwnProps = {};
@@ -56,6 +57,9 @@ interface Index {
     },
     setUser(user) {
       dispatch(setUser(user));
+    },
+    citiLogin() {
+      alert("eh");
     }
   })
 )
@@ -101,20 +105,37 @@ class Index extends Component {
           rightFirstIconType="bullet-list"
           rightSecondIconType="user"
         />
-
-        <br />
-        {!this.props.index.user ? (
-          <AtButton type="primary" onClick={this.props.login} loading={this.props.index.loading}>
-            登录
-          </AtButton>
-        ) : (
-          <View>
-            <LoggedIn user={this.props.index.user} />
-            <AtButton type="primary" onClick={this.props.logout} loading={this.props.index.loading}>
-              Logout
-            </AtButton>
-          </View>
-        )}
+        <View className="container">
+          {!this.props.index.user ? (
+            <View className="container-main">
+              <AtButton
+                type="primary"
+                onClick={this.props.login}
+                loading={this.props.index.loading}
+              >
+                登录
+              </AtButton>
+              <br />
+              <AtButton
+                onClick={this.props.citiLogin}
+                loading={this.props.index.loading}
+              >
+                花旗账号登录
+              </AtButton>
+            </View>
+          ) : (
+            <View>
+              <LoggedIn user={this.props.index.user} />
+              <AtButton
+                type="primary"
+                onClick={this.props.logout}
+                loading={this.props.index.loading}
+              >
+                Logout
+              </AtButton>
+            </View>
+          )}
+        </View>
       </View>
     );
   }
