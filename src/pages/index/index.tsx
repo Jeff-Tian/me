@@ -1,10 +1,11 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, WebView } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtButton, AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 import { login, logout, setUser } from "../../actions/login";
+import querystring from "querystring";
 
 import "./index.styl";
 import User from "../../services/user";
@@ -33,12 +34,32 @@ type PageDispatchProps = {
 
 type PageOwnProps = {};
 
-type PageState = {};
+type PageState = {
+  popup: any;
+};
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
 interface Index {
   props: IProps;
+}
+
+let popup: any = null;
+
+function popupLogic() {
+  try {
+    // @ts-ignore
+    const link = popup.location.href;
+  } catch (ex) {
+    popup.close();
+    window.alert("之前打开的窗口已关闭, 请重新点击并在新打开的窗口中重试。");
+  } finally {
+    popup.postMessage(
+      "https://uniheart.herokuapp.com/passport/citi?redirect_uri=" +
+        encodeURIComponent(location.origin + "/callback/citi"),
+      window.location.origin
+    );
+  }
 }
 
 @connect(
@@ -59,7 +80,53 @@ interface Index {
       dispatch(setUser(user));
     },
     citiLogin() {
-      alert("eh");
+      if (!popup || popup.closed) {
+        popup = window.open();
+        popup.document.write(
+          "<html><head><title>第三方登录 我的个人中心</title></head><body><p>正在加载中, 请稍等" +
+            " ……</p><script>window.addEventListener('message', function (event) {\n" +
+            "    console.log(event.data);\n" +
+            "\n" +
+            "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
+            "        location.href = event.data;\n" +
+            "    }\n" +
+            "}, false);\n" +
+            "\n" +
+            "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
+        );
+
+        window.addEventListener(
+          "message",
+          function(event) {
+            console.log("event = ", event);
+            if (event.origin !== window.location.origin) {
+              return;
+            }
+
+            if (!event.data) {
+              // Ignore the redirecting messages.
+              return;
+            }
+
+            if (event.data === "listenerLoaded") {
+              return popupLogic();
+            }
+
+            if (
+              typeof event.data === "string" &&
+              event.data.indexOf("?") === 0
+            ) {
+              var result = querystring.parse(event.data);
+              console.log(result);
+
+              return (popup || event.source).close();
+            }
+          },
+          false
+        );
+      }
+
+      popupLogic();
     }
   })
 )
@@ -78,6 +145,8 @@ class Index extends Component {
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
   }
+
+  state: PageState = { popup: null };
 
   componentWillUnmount() {}
 
@@ -117,7 +186,7 @@ class Index extends Component {
               </AtButton>
               <br />
               <AtButton
-                onClick={this.props.citiLogin}
+                onClick={this.props.citiLogin.bind(this)}
                 loading={this.props.index.loading}
               >
                 花旗账号登录
