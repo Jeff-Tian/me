@@ -1,4 +1,4 @@
-let url = new URL(require('../package.json').homepage);
+let url = new URL(require("../package.json").homepage);
 
 module.exports = {
   env: {
@@ -10,6 +10,10 @@ module.exports = {
     publicPath: url.pathname,
     router: {
       basename: url.pathname
+    },
+    entry: {
+      home: ["src/pages/index/index.tsx"],
+      callback: ["src/pages/callback/citi.tsx"]
     }
   }
-}
+};

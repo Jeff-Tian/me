@@ -80,6 +80,16 @@ function popupLogic() {
       dispatch(setUser(user));
     },
     citiLogin() {
+      dispatch(login());
+
+      const interval = setInterval(() => {
+        if (popup.closed) {
+          dispatch(setUser(null));
+
+          clearInterval(interval);
+        }
+      }, 1000);
+
       if (!popup || popup.closed) {
         popup = window.open();
         popup.document.write(
