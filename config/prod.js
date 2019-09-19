@@ -12,8 +12,8 @@ module.exports = {
       basename: url.pathname
     },
     entry: {
-      home: ["src/pages/index/index.tsx"],
-      callback: ["src/pages/callback/citi.tsx"]
+      home: ["./src/pages/index/index.tsx"],
+      callback: ["./src/pages/callback/citi.tsx"]
     }
   }
 };

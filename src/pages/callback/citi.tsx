@@ -15,20 +15,6 @@ import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 //
 // #endregion
 
-type PageStateProps = {};
-
-type PageDispatchProps = {};
-
-type PageOwnProps = {};
-
-type PageState = {};
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
-
-interface Citi {
-  props: IProps;
-}
-
 @connect(
   ({}) => ({}),
   () => ({})
@@ -98,4 +84,4 @@ class Citi extends Component {
 //
 // #endregion
 
-export default Citi as ComponentClass<PageOwnProps, PageState>;
+export default Citi as ComponentClass;
