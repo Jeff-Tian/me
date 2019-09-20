@@ -6,8 +6,14 @@ module.exports = {
   weapp: {},
   h5: {
     entry: {
-      home: ["./src/pages/index/index.tsx"],
-      callback: ["./src/pages/callback/citi.tsx"]
+      home: [
+        "webpack-dev-server/client?http://localhost:10086",
+        "webpack/hot/dev-server"
+      ],
+      callback: [
+        "webpack-dev-server/client?http://localhost:10086",
+        "webpack/hot/dev-server"
+      ]
     }
   }
 };
