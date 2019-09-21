@@ -16,7 +16,7 @@ import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 // #endregion
 
 @connect(
-  ({}) => ({}),
+  ({ }) => ({}),
   () => ({})
 )
 class Citi extends Component {
@@ -35,7 +35,7 @@ class Citi extends Component {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     if (window.opener) {
@@ -43,7 +43,7 @@ class Citi extends Component {
     }
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   handleClick() {
     console.log(arguments);
@@ -70,7 +70,7 @@ class Citi extends Component {
           rightSecondIconType="user"
         />
         <View className="container">
-          <p>Hello</p>
+          <p>登录成功，窗口即将关闭……</p>
         </View>
       </View>
     );

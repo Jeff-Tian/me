@@ -4,7 +4,7 @@ import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtButton, AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
-import { login, logout, setUser } from "../../actions/login";
+import { login, logout, setUser, loggedIn } from "../../actions/login";
 import querystring from "querystring";
 
 import "./index.styl";
@@ -56,7 +56,7 @@ function popupLogic() {
   } finally {
     popup.postMessage(
       "https://uniheart.herokuapp.com/passport/citi?redirect_uri=" +
-        encodeURIComponent(location.origin + "/callback/citi"),
+      encodeURIComponent(location.origin + process.env.publicPath + "pages/callback/citi"),
       window.location.origin
     );
   }
@@ -94,20 +94,20 @@ function popupLogic() {
         popup = window.open();
         popup.document.write(
           "<html><head><title>第三方登录 我的个人中心</title></head><body><p>正在加载中, 请稍等" +
-            " ……</p><script>window.addEventListener('message', function (event) {\n" +
-            "    console.log(event.data);\n" +
-            "\n" +
-            "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
-            "        location.href = event.data;\n" +
-            "    }\n" +
-            "}, false);\n" +
-            "\n" +
-            "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
+          " ……</p><script>window.addEventListener('message', function (event) {\n" +
+          "    console.log(event.data);\n" +
+          "\n" +
+          "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
+          "        location.href = event.data;\n" +
+          "    }\n" +
+          "}, false);\n" +
+          "\n" +
+          "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
         );
 
         window.addEventListener(
           "message",
-          function(event) {
+          function (event) {
             console.log("event = ", event);
             if (event.origin !== window.location.origin) {
               return;
@@ -126,8 +126,12 @@ function popupLogic() {
               typeof event.data === "string" &&
               event.data.indexOf("?") === 0
             ) {
-              var result = querystring.parse(event.data);
+              var result = querystring.parse(event.data.substr(1));
               console.log(result);
+
+              if (result.token) {
+                dispatch(loggedIn(result.token))
+              }
 
               return (popup || event.source).close();
             }
@@ -158,13 +162,13 @@ class Index extends Component {
 
   state: PageState = { popup: null };
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     this.props.setUser(User.get());
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   handleClick() {
     console.log(arguments);
@@ -203,17 +207,17 @@ class Index extends Component {
               </AtButton>
             </View>
           ) : (
-            <View>
-              <LoggedIn user={this.props.index.user} />
-              <AtButton
-                type="primary"
-                onClick={this.props.logout}
-                loading={this.props.index.loading}
-              >
-                Logout
+              <View>
+                <LoggedIn user={this.props.index.user} />
+                <AtButton
+                  type="primary"
+                  onClick={this.props.logout}
+                  loading={this.props.index.loading}
+                >
+                  Logout
               </AtButton>
-            </View>
-          )}
+              </View>
+            )}
         </View>
       </View>
     );

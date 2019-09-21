@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SET_USER } from '../constants/login'
+import { LOGIN, LOGOUT, SET_USER, LOGGEDIN } from '../constants/login'
 
 const INITIAL_STATE = {
   loading: false,
@@ -9,15 +9,13 @@ const INITIAL_STATE = {
 export default function login(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOGIN:
-      // User.login().then((user) => {
-      // console.log('user = ', user)
-      // })
       return { ...state, loading: true }
     case LOGOUT:
-      // User.logout()
       return { ...state, loading: true }
     case SET_USER:
       return { ...state, user: action.user, loading: false }
+    case LOGGEDIN:
+      return { ...state, loading: false }
     default:
       return state
   }

@@ -2,7 +2,8 @@ let url = new URL(require("../package.json").homepage);
 
 module.exports = {
   env: {
-    NODE_ENV: '"production"'
+    NODE_ENV: '"production"',
+    publicPath: JSON.stringify(url.pathname)
   },
   defineConstants: {},
   weapp: {},
