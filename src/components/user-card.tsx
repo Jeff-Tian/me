@@ -5,7 +5,7 @@ import { ComponentClass } from "react";
 
 interface UserCard {
   props: {
-    user: User | null;
+    user: User | null | any;
   };
 }
 
@@ -17,10 +17,10 @@ class UserCard extends Component {
   render(): any {
     return (
       <AtList>
-        {this.props.user &&
+        {this.props.user && this.props.user.idToken && this.props.user.idToken.emails ?
           this.props.user.idToken.emails.map(email => (
             <AtListItem title={email} key={email} />
-          ))}
+          )) : <AtListItem title={this.props.user.display_name} />}
       </AtList>
     );
   }

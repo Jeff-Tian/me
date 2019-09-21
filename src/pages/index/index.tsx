@@ -84,8 +84,7 @@ function popupLogic() {
 
       const interval = setInterval(() => {
         if (popup.closed) {
-          dispatch(setUser(null));
-
+          console.log('hello')
           clearInterval(interval);
         }
       }, 1000);
@@ -107,7 +106,7 @@ function popupLogic() {
 
         window.addEventListener(
           "message",
-          function (event) {
+          async function (event) {
             console.log("event = ", event);
             if (event.origin !== window.location.origin) {
               return;
@@ -126,11 +125,25 @@ function popupLogic() {
               typeof event.data === "string" &&
               event.data.indexOf("?") === 0
             ) {
-              var result = querystring.parse(event.data.substr(1));
-              console.log(result);
+              var tokenResult = querystring.parse(event.data.substr(1));
+              console.log(tokenResult);
 
-              if (result.token) {
-                dispatch(loggedIn(result.token))
+              if (tokenResult.token) {
+                dispatch(loggedIn(tokenResult.token))
+
+                try {
+                  const userInfo = await Taro.request({
+                    url: 'https://uniheart.pa-ca.me/jwt/user',
+                    header: {
+                      'Authorization': 'Bearer ' + tokenResult.token
+                    },
+                    method: 'GET',
+                  })
+
+                  dispatch(setUser(userInfo.data))
+                } catch (ex) {
+                  console.error(ex)
+                }
               }
 
               return (popup || event.source).close();
@@ -196,7 +209,7 @@ class Index extends Component {
                 onClick={this.props.login}
                 loading={this.props.index.loading}
               >
-                登录
+                微软 AD 账号登录
               </AtButton>
               <br />
               <AtButton

@@ -16,7 +16,13 @@ $ yarn global add @tarojs/cli
 然后执行如下命令，运行完后打开微信开发者工具，选择项目根目录进行预览
 
 ```
-$ taro build --type weapp --watch
+$ npm run dev:weapp
+```
+
+### 网页版开发
+
+```
+$ npm run dev:h5
 ```
 
 ## 线上预览
