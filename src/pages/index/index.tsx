@@ -73,6 +73,7 @@ function popupLogic() {
     },
     logout() {
       dispatch(logout());
+      Taro.setStorageSync('userInfo', null)
       User.logout();
       dispatch(setUser(null));
     },
@@ -178,7 +179,7 @@ class Index extends Component {
   componentWillUnmount() { }
 
   componentDidShow() {
-    this.props.setUser(User.get());
+    this.props.setUser(User.get() || Taro.getStorageSync('userInfo'));
   }
 
   componentDidHide() { }
@@ -209,7 +210,8 @@ class Index extends Component {
                 onClick={this.props.login}
                 loading={this.props.index.loading}
               >
-                微软 AD 账号登录
+                {Taro.getEnv() === Taro.ENV_TYPE.WEB && '微软 AD 账号'}
+                {Taro.getEnv() === Taro.ENV_TYPE.WEAPP && '微信授权登录'}
               </AtButton>
               <br />
               <AtButton

@@ -4,6 +4,8 @@ import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
+import querystring from "querystring";
+import { login, setUser, loggedIn } from "../../actions/login";
 
 // #region 书写注意
 //
@@ -15,9 +17,53 @@ import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 //
 // #endregion
 
+type PageDispatchProps = {
+  login: () => void;
+  logout: () => void;
+  setUser: (user) => void;
+  citiLogin: () => void;
+};
+
+type IProps = PageDispatchProps;
+
+interface Citi {
+  props: IProps;
+}
+
+
 @connect(
   ({ }) => ({}),
-  () => ({})
+  (dispatch) => ({
+    login() {
+      dispatch(login());
+    },
+    setUser(user) {
+      dispatch(setUser(user));
+    },
+    citiLogin() {
+      var tokenResult = querystring.parse(window.location.search.substr(1));
+      console.log(tokenResult);
+
+      if (tokenResult.token) {
+        dispatch(loggedIn(tokenResult.token))
+
+        Taro.request({
+          url: 'https://uniheart.pa-ca.me/jwt/user',
+          header: {
+            'Authorization': 'Bearer ' + tokenResult.token
+          },
+          method: 'GET',
+        }).then(userInfo => {
+          dispatch(setUser(userInfo.data)); Taro.setStorageSync('userInfo', userInfo.data);
+          console.log('haha = , ', Taro.getStorageSync('userInfo'));
+        }, console.error).then(() => {
+          Taro.navigateTo({
+            url: "/"
+          })
+        })
+      }
+    }
+  })
 )
 class Citi extends Component {
   /**
@@ -40,6 +86,8 @@ class Citi extends Component {
   componentDidShow() {
     if (window.opener) {
       window.opener.postMessage(window.location.search, window.location.origin);
+
+      this.props.citiLogin()
     }
   }
 
@@ -51,7 +99,7 @@ class Citi extends Component {
 
   async handleLeftClick() {
     await Taro.navigateTo({
-      url: "/pages/index/index"
+      url: "/"
     });
   }
 
