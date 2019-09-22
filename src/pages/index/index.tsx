@@ -210,16 +210,17 @@ class Index extends Component {
                 onClick={this.props.login}
                 loading={this.props.index.loading}
               >
-                {Taro.getEnv() === Taro.ENV_TYPE.WEB && '微软 AD 账号'}
+                {Taro.getEnv() === Taro.ENV_TYPE.WEB ? '微软 AD 账号' : ''}
                 {Taro.getEnv() === Taro.ENV_TYPE.WEAPP && '微信授权登录'}
               </AtButton>
               <br />
-              <AtButton
-                onClick={this.props.citiLogin.bind(this)}
-                loading={this.props.index.loading}
-              >
-                花旗账号登录
-              </AtButton>
+              {Taro.getEnv() === Taro.ENV_TYPE.WEB ?
+                <AtButton
+                  onClick={this.props.citiLogin.bind(this)}
+                  loading={this.props.index.loading}
+                >
+                  花旗账号登录
+              </AtButton> : null}
             </View>
           ) : (
               <View>
