@@ -8,6 +8,7 @@ cache:
     - node_modules
 
 script:
+  - npm run e2e
   - npm run build
   - mkdir -p dist/pages/callback
   - cp -r dist/index.html dist/pages/callback/citi.html
