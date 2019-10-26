@@ -14,11 +14,13 @@ jobs:
         with:
           node-version: 10.x
       - name: Generate artifacts
+        env:
+          ci: true
         run: |
           npm i
-          ci=true npm run e2e
+          npm run e2e
       - name: Upload artifacts
-        uses: skx/github-action-publish-binaries@master
+        uses: skx/github-action-publish-binaries@release-0.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
