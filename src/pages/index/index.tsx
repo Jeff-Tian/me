@@ -230,7 +230,7 @@ class Index extends Component {
                   onClick={this.props.logout}
                   loading={this.props.index.loading}
                 >
-                  Logout
+                  Log Out
               </AtButton>
               </View>
             )}
