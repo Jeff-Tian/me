@@ -7,6 +7,9 @@ cache:
   directories:
     - node_modules
 
+env:
+  ci: true
+
 script:
   - npm run e2e
   - npm run build

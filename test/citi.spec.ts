@@ -13,8 +13,8 @@ const height = 736;
 describe("OAuth Log In", () => {
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,
       slowMo: 80,
+      headless: "true" === process.env.ci,
       args: [`--window-size=${width},${height}`]
     });
     page = await browser.newPage();

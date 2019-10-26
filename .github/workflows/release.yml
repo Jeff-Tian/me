@@ -16,7 +16,7 @@ jobs:
       - name: Generate artifacts
         run |
           npm i
-          npm run e2e
+          ci=true npm run e2e
       - name: Upload artifacts
         uses: skx/github-action-publish-binaries@master
         env:
