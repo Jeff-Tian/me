@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 10.x
       - name: Generate artifacts
-        run |
+        run: |
           npm i
           ci=true npm run e2e
       - name: Upload artifacts
