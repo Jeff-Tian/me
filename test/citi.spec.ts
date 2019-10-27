@@ -13,7 +13,6 @@ const height = 736;
 describe("OAuth Log In", () => {
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      slowMo: 80,
       headless: "true" === process.env.ci,
       args: [`--window-size=${width},${height}`]
     });
@@ -28,9 +27,10 @@ describe("OAuth Log In", () => {
   test("can navigate to Log In page", async () => {
     async function testing() {
       console.log("start testing...");
-      await page.goto(APP);
+      await page.goto(APP, { waitUntil: 'networkidle0' });
       await page.waitForSelector("div.at-button__text");
       console.log("testing done.");
+      const client = await page.target().createCDPSession();
     }
 
     async function screenRecording() {
@@ -44,7 +44,7 @@ describe("OAuth Log In", () => {
           `T${new Date().getTime()}.png`
         );
         process.stdout.write(".");
-        screenshotPromises.push(page.screenshot({ path: filename }));
+        screenshotPromises.push(page.screenshot({ path: filename, fullPage: true }));
 
         await new Promise(resolve => setTimeout(resolve, 1000));
       }

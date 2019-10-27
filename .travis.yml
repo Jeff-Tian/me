@@ -25,3 +25,4 @@ deploy:
     local_dir: dist
     on:
       branch: master
+    fqdn: pa-ca.me

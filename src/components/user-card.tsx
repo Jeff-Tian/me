@@ -12,6 +12,8 @@ interface UserCard {
 class UserCard extends Component {
   constructor(props) {
     super(props);
+
+    console.log('user = ', props.user)
   }
 
   render(): any {

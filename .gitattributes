@@ -6,4 +6,6 @@
 .gitignore text eol=lf
 *.json text eol=lf
 *.lock text eol=lf
-
+.travis.yml text eol=lf
+*.md text eol=lf
+*.tsx text eol=lf
