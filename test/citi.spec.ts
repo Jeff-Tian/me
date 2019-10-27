@@ -28,7 +28,7 @@ describe("OAuth Log In", () => {
     async function testing() {
       console.log("start testing...");
       await page.goto(APP, { waitUntil: 'networkidle0' });
-      await page.waitForSelector("div.at-button__text");
+      // await page.waitForSelector("div.at-button__text");
       console.log("testing done.");
       const client = await page.target().createCDPSession();
     }
