@@ -4,7 +4,7 @@ import GIFEncoder from "gifencoder";
 import pngFileStream from "png-file-stream";
 import fs from "fs";
 
-const APP = "https://jeff-tian.github.io/me/";
+const APP = "https://pa-ca.me/";
 let page;
 let browser;
 const width = 414;
@@ -28,7 +28,7 @@ describe("OAuth Log In", () => {
     async function testing() {
       console.log("start testing...");
       await page.goto(APP, { waitUntil: 'networkidle0' });
-      // await page.waitForSelector("div.at-button__text");
+      await page.waitForSelector("div.at-button__text");
       console.log("testing done.");
       const client = await page.target().createCDPSession();
     }
