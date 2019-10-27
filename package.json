@@ -20,7 +20,7 @@
     "e2e": "jest --config jest.config.js --detectOpenHandles"
   },
   "author": "jeff.tian@outlook.com",
-  "homepage": "https://jeff-tian.github.io/me/",
+  "homepage": "https://pa-ca.me/",
   "license": "MIT",
   "dependencies": {
     "@tarojs/async-await": "1.2.15",
