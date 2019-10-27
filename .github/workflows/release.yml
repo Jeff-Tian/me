@@ -20,7 +20,7 @@ jobs:
           npm i
           npm run e2e
       - name: Upload artifacts
-        uses: skx/github-action-publish-binaries@release-0.9
+        uses: skx/github-action-publish-binaries@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
