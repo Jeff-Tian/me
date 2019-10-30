@@ -46,6 +46,7 @@ interface Citi {
 
       if (tokenResult.token) {
         dispatch(loggedIn(tokenResult.token))
+        Taro.setStorageSync('token', tokenResult);
 
         Taro.request({
           url: 'https://uniheart.pa-ca.me/jwt/user',
@@ -55,7 +56,6 @@ interface Citi {
           method: 'GET',
         }).then(userInfo => {
           dispatch(setUser(userInfo.data)); Taro.setStorageSync('userInfo', userInfo.data);
-          console.log('haha = , ', Taro.getStorageSync('userInfo'));
         }, console.error).then(() => {
           Taro.navigateTo({
             url: "/"
@@ -86,9 +86,9 @@ class Citi extends Component {
   componentDidShow() {
     if (window.opener) {
       window.opener.postMessage(window.location.search, window.location.origin);
-
-      this.props.citiLogin()
     }
+
+    this.props.citiLogin()
   }
 
   componentDidHide() { }
