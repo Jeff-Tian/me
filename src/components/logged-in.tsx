@@ -4,7 +4,10 @@ import UserCard from "./user-card";
 import { ComponentClass } from "react";
 import { User } from "msal";
 
-class LoggedIn extends Component {
+type LoggedInProps = {
+  user?: any
+}
+class LoggedIn extends Component<LoggedInProps> {
   render() {
     return (
       <View>

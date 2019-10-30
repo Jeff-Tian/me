@@ -1,15 +1,16 @@
-import {ComponentClass} from 'react'
-import Taro, {Component, Config} from '@tarojs/taro'
-import {View} from '@tarojs/components'
-import {connect} from '@tarojs/redux'
-import {AtButton, AtNavBar} from 'taro-ui'
-import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
-import {login, logout, setUser, loggedIn} from '../../actions/login'
-import querystring from 'querystring'
+import { View } from '@tarojs/components';
+import { connect } from '@tarojs/redux';
+import Taro, { Component, Config } from '@tarojs/taro';
+import querystring from 'querystring';
+import { ComponentClass } from 'react';
+import UnLoggedInView from '../../components/unlogged-in-view';
+import { AtNavBar } from 'taro-ui';
+import 'taro-ui/dist/style/index.scss'; // 引入组件样式 - 方式一
+import { loggedIn, login, logout, setUser } from '../../actions/login';
+import LoggedInView from '../../components/logged-in-view';
+import User from '../../services/user';
+import './index.styl';
 
-import './index.styl'
-import User from '../../services/user'
-import LoggedIn from '../../components/logged-in'
 
 // #region 书写注意
 //
@@ -22,7 +23,7 @@ import LoggedIn from '../../components/logged-in'
 // #endregion
 
 type PageStateProps = {
-  index: {loading: false; user: null}
+  index: { loading: false; user: null }
 }
 
 type PageDispatchProps = {
@@ -56,16 +57,16 @@ function popupLogic() {
   } finally {
     popup.postMessage(
       'https://uniheart.herokuapp.com/passport/citi?redirect_uri=' +
-        encodeURIComponent(
-          location.origin + process.env.publicPath + 'pages/callback/citi'
-        ),
+      encodeURIComponent(
+        location.origin + process.env.publicPath + 'pages/callback/citi'
+      ),
       window.location.origin
     )
   }
 }
 
 @connect(
-  ({index}) => ({
+  ({ index }) => ({
     index,
   }),
   dispatch => ({
@@ -96,20 +97,20 @@ function popupLogic() {
         popup = window.open()
         popup.document.write(
           '<html><head><title>第三方登录 我的个人中心</title></head><body><p>正在加载中, 请稍等' +
-            " ……</p><script>window.addEventListener('message', function (event) {\n" +
-            '    console.log(event.data);\n' +
-            '\n' +
-            "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
-            '        location.href = event.data;\n' +
-            '    }\n' +
-            '}, false);\n' +
-            '\n' +
-            "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
+          " ……</p><script>window.addEventListener('message', function (event) {\n" +
+          '    console.log(event.data);\n' +
+          '\n' +
+          "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
+          '        location.href = event.data;\n' +
+          '    }\n' +
+          '}, false);\n' +
+          '\n' +
+          "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
         )
 
         window.addEventListener(
           'message',
-          async function(event) {
+          async function (event) {
             console.log('event = ', event)
             if (event.origin !== window.location.origin) {
               return
@@ -176,15 +177,15 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
 
-  state: PageState = {popup: null}
+  state: PageState = { popup: null }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     this.props.setUser(User.get() || Taro.getStorageSync('userInfo'))
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   handleClick() {
     console.log(arguments)
@@ -205,38 +206,10 @@ class Index extends Component {
           rightSecondIconType="user"
         />
         <View className="container">
-          {!this.props.index.user ? (
-            <View className="container-main">
-              <AtButton
-                type="primary"
-                onClick={this.props.login}
-                loading={this.props.index.loading}
-              >
-                {Taro.getEnv() === Taro.ENV_TYPE.WEB ? '微软 AD 账号' : ''}
-                {Taro.getEnv() === Taro.ENV_TYPE.WEAPP && '微信授权登录'}
-              </AtButton>
-              <br />
-              {Taro.getEnv() === Taro.ENV_TYPE.WEB ? (
-                <AtButton
-                  onClick={this.props.citiLogin.bind(this)}
-                  loading={this.props.index.loading}
-                >
-                  花旗账号登录
-                </AtButton>
-              ) : null}
-            </View>
-          ) : (
-            <View>
-              <LoggedIn user={this.props.index.user} />
-              <AtButton
-                type="primary"
-                onClick={this.props.logout}
-                loading={this.props.index.loading}
-              >
-                Log Out
-              </AtButton>
-            </View>
-          )}
+          {
+            !this.props.index.user ?
+              <UnLoggedInView {...this.props} /> : <LoggedInView {...this.props} />
+          }
         </View>
       </View>
     )
@@ -251,3 +224,4 @@ class Index extends Component {
 // #endregion
 
 export default Index as ComponentClass<PageOwnProps, PageState>
+
