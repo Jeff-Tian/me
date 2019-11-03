@@ -3,6 +3,14 @@ language: node_js
 node_js:
   - 11.10.0
 
+services:
+  - docker
+
+install:
+  - docker build -t jeff-tian/me
+  - docker images
+  - docker run -d -p 127.0.0.1:10086:10086 --name me me
+
 cache:
   directories:
     - node_modules
@@ -16,6 +24,9 @@ script:
   - mkdir -p dist/pages/callback
   - cp -r dist/index.html dist/pages/callback/citi.html
   - ls dist
+  - docker ps | grep -q me
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push jefftian/me
 
 deploy:
   - provider: pages
