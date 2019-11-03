@@ -9,3 +9,5 @@
 .travis.yml text eol=lf
 *.md text eol=lf
 *.tsx text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
