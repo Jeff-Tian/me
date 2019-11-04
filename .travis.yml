@@ -7,6 +7,7 @@ services:
   - docker
 
 install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t "$DOCKER_USERNAME"/me .
   - docker images
   - docker run -d -p 127.0.0.1:10086:10086 --name me me
@@ -25,7 +26,6 @@ script:
   - cp -r dist/index.html dist/pages/callback/citi.html
   - ls dist
   - docker ps | grep -q me
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push jefftian/me
 
 deploy:
