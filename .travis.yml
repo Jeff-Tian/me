@@ -25,7 +25,7 @@ script:
 
   - docker build -t "$DOCKER_USERNAME"/me .
   - docker images
-  - docker run -d -p 127.0.0.1:10086:10086 --name me me
+  - docker run -d -p 127.0.0.1:10086:10086 --name me "$DOCKER_USERNAME"/me
   - docker ps | grep -q me
   - docker push jefftian/me
 
