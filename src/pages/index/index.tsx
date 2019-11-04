@@ -1,16 +1,15 @@
-import { View } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
-import Taro, { Component, Config } from '@tarojs/taro';
-import querystring from 'querystring';
-import { ComponentClass } from 'react';
-import UnLoggedInView from '../../components/unlogged-in-view';
-import { AtNavBar } from 'taro-ui';
-import 'taro-ui/dist/style/index.scss'; // 引入组件样式 - 方式一
-import { loggedIn, login, logout, setUser } from '../../actions/login';
-import LoggedInView from '../../components/logged-in-view';
-import User from '../../services/user';
-import './index.styl';
-
+import {View} from '@tarojs/components'
+import {connect} from '@tarojs/redux'
+import Taro, {Component, Config} from '@tarojs/taro'
+import querystring from 'querystring'
+import {ComponentClass} from 'react'
+import UnLoggedInView from '../../components/unlogged-in-view'
+import {AtNavBar} from 'taro-ui'
+import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
+import {loggedIn, login, logout, setUser} from '../../actions/login'
+import LoggedInView from '../../components/logged-in-view'
+import User from '../../services/user'
+import './index.styl'
 
 // #region 书写注意
 //
@@ -23,14 +22,14 @@ import './index.styl';
 // #endregion
 
 type PageStateProps = {
-  index: { loading: false; user: null }
+  index: {loading: false; user: null}
 }
 
 type PageDispatchProps = {
-  login: () => void
-  logout: () => void
-  setUser: (user) => void
-  citiLogin: () => void
+  login: () => void;
+  logout: () => void;
+  setUser: (user) => void;
+  citiLogin: () => void;
 }
 
 type PageOwnProps = {}
@@ -57,16 +56,16 @@ function popupLogic() {
   } finally {
     popup.postMessage(
       'https://uniheart.herokuapp.com/passport/citi?redirect_uri=' +
-      encodeURIComponent(
-        location.origin + process.env.publicPath + 'pages/callback/citi'
-      ),
+        encodeURIComponent(
+          location.origin + process.env.publicPath + 'pages/callback/citi'
+        ),
       window.location.origin
     )
   }
 }
 
 @connect(
-  ({ index }) => ({
+  ({index}) => ({
     index,
   }),
   dispatch => ({
@@ -97,20 +96,20 @@ function popupLogic() {
         popup = window.open()
         popup.document.write(
           '<html><head><title>第三方登录 我的个人中心</title></head><body><p>正在加载中, 请稍等' +
-          " ……</p><script>window.addEventListener('message', function (event) {\n" +
-          '    console.log(event.data);\n' +
-          '\n' +
-          "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
-          '        location.href = event.data;\n' +
-          '    }\n' +
-          '}, false);\n' +
-          '\n' +
-          "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
+            " ……</p><script>window.addEventListener('message', function (event) {\n" +
+            '    console.log(event.data);\n' +
+            '\n' +
+            "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
+            '        location.href = event.data;\n' +
+            '    }\n' +
+            '}, false);\n' +
+            '\n' +
+            "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
         )
 
         window.addEventListener(
           'message',
-          async function (event) {
+          async function(event) {
             console.log('event = ', event)
             if (event.origin !== window.location.origin) {
               return
@@ -177,15 +176,15 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
 
-  state: PageState = { popup: null }
+  state: PageState = {popup: null}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     this.props.setUser(User.get() || Taro.getStorageSync('userInfo'))
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   handleClick() {
     console.log(arguments)
@@ -206,10 +205,11 @@ class Index extends Component {
           rightSecondIconType="user"
         />
         <View className="container">
-          {
-            !this.props.index.user ?
-              <UnLoggedInView {...this.props} /> : <LoggedInView {...this.props} />
-          }
+          {!this.props.index.user ? (
+            <UnLoggedInView {...this.props} />
+          ) : (
+            <LoggedInView {...this.props} />
+          )}
         </View>
       </View>
     )
@@ -224,4 +224,3 @@ class Index extends Component {
 // #endregion
 
 export default Index as ComponentClass<PageOwnProps, PageState>
-

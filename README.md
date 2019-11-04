@@ -4,6 +4,8 @@
 
 [![Build Status](https://travis-ci.com/Jeff-Tian/me.svg?branch=master)](https://travis-ci.com/Jeff-Tian/me)
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Jeff-Tian_me)](https://sonarcloud.io/dashboard?id=Jeff-Tian_me)
+
 ## 安装与运行
 
 首先需要全局安装 cli 开发工具 @tarojs/cli
@@ -29,11 +31,10 @@ npm run dev:h5
 
 ## 线上预览
 
-|             网页版              |                        小程序                         |                             小程序体验版                             |
-| :-----------------------------: | :---------------------------------------------------: | :------------------------------------------------------------------: |
+|      网页版       |                        小程序                         |                             小程序体验版                             |
+| :---------------: | :---------------------------------------------------: | :------------------------------------------------------------------: |
 | https://pa-ca.me/ | ![小程序二维码](./src/images/gh_e56e6784a430_258.jpg) | ![小程序体验版二维码](./src/images/odrHN4p1UMWRdQfMK4xm9dtQXvf8.jpg) |
 
 ## 运行截图
 
 ![运行截图](https://github.com/Jeff-Tian/me/releases/download/v0.0.3/screenshot.gif)
-
