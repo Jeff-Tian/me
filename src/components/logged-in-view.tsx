@@ -1,71 +1,91 @@
-import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
-import { AtButton } from "taro-ui";
+import {View} from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import {AtButton} from 'taro-ui'
 import LoggedIn from './logged-in'
 
-type LoggedInViewProps = {
-    index: {
-        user?: any,
-        loading: boolean
-    },
+import pack from '../../package.json'
 
-    logout: () => void
+type LoggedInViewProps = {
+  index: {
+    user?: any
+    loading: boolean
+  }
+  logout: () => void
 }
 
 type LoggedInViewState = {
-    issueInProgress: boolean
+  issueInProgress: boolean
 }
 
-export default class LoggedInView extends Taro.Component<LoggedInViewProps, LoggedInViewState> {
-    constructor(props) {
-        super(props)
+export default class LoggedInView extends Taro.Component<
+  LoggedInViewProps,
+  LoggedInViewState
+> {
+  constructor(props) {
+    super(props)
+  }
+
+  async issueToken() {
+    const result = Taro.getStorageSync('token')
+
+    if (!result) {
+      await Taro.showToast({
+        title: '操作失败，请重新登录后再试。',
+        icon: 'none',
+        duration: 3000,
+      })
+      return
     }
 
-    async issueToken() {
-        const result = Taro.getStorageSync('token');
+    const link =
+      pack.homepage +
+      'pages/callback/citi?token=' +
+      result.token +
+      '&traceId=' +
+      result.traceId
 
-        if (!result) {
-            Taro.showToast({ title: '操作失败，请重新登录后再试。', icon: 'none', duration: 3000 })
-            return
-        }
+    console.log('link = ', link)
+    try {
+      await Taro.setClipboardData({
+        data: link,
+      })
 
-        const link = location.origin + '/pages/callback/citi?token=' + result.token + '&traceId=' + result.traceId
+      await Taro.showToast({
+        title: link,
+        icon: 'success',
+        duration: 2000,
+      })
+    } catch (ex) {
+      console.error(ex)
 
-        console.log('link = ', link)
-        try {
-            await Taro.setClipboardData({
-                data: link,
-            })
-
-            Taro.showToast({
-                title: link,
-                icon: 'success',
-                duration: 2000
-            })
-        } catch (ex) {
-            console.error(ex)
-
-            Taro.showToast({
-                title: link,
-                icon: 'none',
-                duration: 6000
-            })
-        }
-
+      await Taro.showToast({
+        title: link,
+        icon: 'none',
+        duration: 6000,
+      })
     }
+  }
 
-    render() {
-        return <View>
-            <LoggedIn user={this.props.index.user} />
-            <AtButton type="primary" onClick={this.issueToken.bind(this)} loading={this.state.issueInProgress}>颁发令牌</AtButton>
-            <br />
-            <AtButton
-                type="primary"
-                onClick={this.props.logout}
-                loading={this.props.index.loading}
-            >
-                退出登录
-              </AtButton>
-        </View>
-    }
+  render() {
+    return (
+      <View>
+        <LoggedIn user={this.props.index.user} />
+        <AtButton
+          type="primary"
+          onClick={this.issueToken.bind(this)}
+          loading={this.state.issueInProgress}
+        >
+          颁发令牌
+        </AtButton>
+        <AtDivider />
+        <AtButton
+          type="primary"
+          onClick={this.props.logout}
+          loading={this.props.index.loading}
+        >
+          退出登录
+        </AtButton>
+      </View>
+    )
+  }
 }
