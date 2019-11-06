@@ -1,11 +1,11 @@
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
-import { AtNavBar } from "taro-ui";
-import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
-import querystring from "querystring";
-import { login, setUser, loggedIn } from "../../actions/login";
+import {ComponentClass} from 'react'
+import Taro, {Component, Config} from '@tarojs/taro'
+import {View} from '@tarojs/components'
+import {connect} from '@tarojs/redux'
+import {AtNavBar} from 'taro-ui'
+import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
+import querystring from 'querystring'
+import {login, setUser, loggedIn} from '../../actions/login'
 
 // #region 书写注意
 //
@@ -18,52 +18,55 @@ import { login, setUser, loggedIn } from "../../actions/login";
 // #endregion
 
 type PageDispatchProps = {
-  login: () => void;
-  logout: () => void;
-  setUser: (user) => void;
-  citiLogin: () => void;
-};
-
-type IProps = PageDispatchProps;
-
-interface Citi {
-  props: IProps;
+  login: () => void
+  logout: () => void
+  setUser: (user) => void
+  citiLogin: () => void
 }
 
+type IProps = PageDispatchProps
+
+interface Citi {
+  props: IProps
+}
 
 @connect(
-  ({ }) => ({}),
-  (dispatch) => ({
+  ({}) => ({}),
+  dispatch => ({
     login() {
-      dispatch(login());
+      dispatch(login())
     },
     setUser(user) {
-      dispatch(setUser(user));
+      dispatch(setUser(user))
     },
     citiLogin() {
-      var tokenResult = querystring.parse(window.location.search.substr(1));
-      console.log(tokenResult);
+      var tokenResult = querystring.parse(window.location.search.substr(1))
+      console.log(tokenResult)
 
       if (tokenResult.token) {
         dispatch(loggedIn(tokenResult.token))
-        Taro.setStorageSync('token', tokenResult);
+        Taro.setStorageSync('token', tokenResult)
 
         Taro.request({
           url: 'https://uniheart.pa-ca.me/jwt/user',
           header: {
-            'Authorization': 'Bearer ' + tokenResult.token
+            Authorization: 'Bearer ' + tokenResult.token,
           },
           method: 'GET',
-        }).then(userInfo => {
-          dispatch(setUser(userInfo.data)); Taro.setStorageSync('userInfo', userInfo.data);
-        }, console.error).then(() => {
-          Taro.navigateTo({
-            url: "/"
-          })
         })
+          .then(userInfo => {
+            dispatch(setUser(userInfo.data))
+            Taro.setStorageSync('userInfo', userInfo.data)
+            console.log('user set to : ', userInfo.data)
+          }, console.error)
+          .then(() => {
+            Taro.navigateTo({
+              url: '/',
+            }).then()
+          })
       }
-    }
-  })
+    },
+  }),
 )
 class Citi extends Component {
   /**
@@ -74,33 +77,35 @@ class Citi extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: "我的个人中心"
-  };
-
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    navigationBarTitleText: '我的个人中心',
   }
 
-  componentWillUnmount() { }
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps)
+  }
+
+  componentWillUnmount() {
+  }
 
   componentDidShow() {
     if (window.opener) {
-      window.opener.postMessage(window.location.search, window.location.origin);
+      window.opener.postMessage(window.location.search, window.location.origin)
     }
 
     this.props.citiLogin()
   }
 
-  componentDidHide() { }
+  componentDidHide() {
+  }
 
   handleClick() {
-    console.log(arguments);
+    console.log(arguments)
   }
 
   async handleLeftClick() {
     await Taro.navigateTo({
-      url: "/"
-    });
+      url: '/',
+    })
   }
 
   render() {
@@ -121,7 +126,7 @@ class Citi extends Component {
           <p>登录成功，窗口即将关闭……</p>
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -132,4 +137,4 @@ class Citi extends Component {
 //
 // #endregion
 
-export default Citi as ComponentClass;
+export default Citi as ComponentClass
