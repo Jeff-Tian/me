@@ -1,15 +1,15 @@
 import {View} from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import {AtButton} from 'taro-ui'
+import {AtButton, AtDivider} from 'taro-ui'
 import LoggedIn from './logged-in'
 
 import pack from '../../package.json'
 
 type LoggedInViewProps = {
   index: {
-    user?: any
-    loading: boolean
-  }
+    user?: any,
+    loading: boolean,
+  },
   logout: () => void
 }
 
@@ -17,10 +17,8 @@ type LoggedInViewState = {
   issueInProgress: boolean
 }
 
-export default class LoggedInView extends Taro.Component<
-  LoggedInViewProps,
-  LoggedInViewState
-> {
+export default class LoggedInView extends Taro.Component<LoggedInViewProps,
+  LoggedInViewState> {
   constructor(props) {
     super(props)
   }
@@ -71,7 +69,7 @@ export default class LoggedInView extends Taro.Component<
       <View>
         <LoggedIn user={this.props.index.user} />
         <AtButton
-          type="primary"
+          type='primary'
           onClick={this.issueToken.bind(this)}
           loading={this.state.issueInProgress}
         >
@@ -79,7 +77,7 @@ export default class LoggedInView extends Taro.Component<
         </AtButton>
         <AtDivider />
         <AtButton
-          type="primary"
+          type='primary'
           onClick={this.props.logout}
           loading={this.props.index.loading}
         >
