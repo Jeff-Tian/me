@@ -35,7 +35,7 @@ export default class UserCard extends Component<UserCardProps, UserCardState> {
       <AtCard
         title={this.props.user.display_name}
         note={this.props.user.createdAt}
-        thumb='https://sandbox.apihub.citi.com/gcb/authCode/resources/images/Citi-Enterprise-White.png'
+        thumb="https://sandbox.apihub.citi.com/gcb/authCode/resources/images/Citi-Enterprise-White.png"
         extra={this.state.profile.customerType}
       >
         {this.renderObject(this.state.profile)}
@@ -47,26 +47,20 @@ export default class UserCard extends Component<UserCardProps, UserCardState> {
     return (
       <AtList>
         {Object.keys(o).map(key => (
-          <AtListItem>
-            {key}：{this.renderIt(o[key])}
-          </AtListItem>
+          <AtListItem title={key} />
         ))}
       </AtList>
     )
   }
 
-  renderString(string: string) {
-    return string
-  }
-
   renderIt(o: any) {
     switch (typeof o) {
       case 'string':
-        return this.renderString(o)
+        return <AtListItem title={o} />
       case 'object':
         return this.renderObject(o)
       default:
-        return 'unknown'
+        return null
     }
   }
 }

@@ -1,27 +1,33 @@
-import { LOGIN, LOGOUT, SET_USER, LOGGEDIN } from '../constants/login'
+import {LOGIN, LOGOUT, SET_USER, LOGGEDIN, LOGGIN_CANCELLED} from '../constants/login'
 
 export const login = () => {
   return {
-    type: LOGIN
+    type: LOGIN,
   }
 }
 
 export const logout = () => {
   return {
-    type: LOGOUT
+    type: LOGOUT,
   }
 }
 
-export const setUser = (user) => {
+export const setUser = user => {
   return {
     type: SET_USER,
-    user
+    user,
   }
 }
 
-export const loggedIn = (token) => {
+export const loggedIn = token => {
   return {
     type: LOGGEDIN,
-    token
+    token,
+  }
+}
+
+export const loginCancelled = () => {
+  return {
+    type: LOGGIN_CANCELLED,
   }
 }

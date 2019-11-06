@@ -6,7 +6,7 @@ import {ComponentClass} from 'react'
 import UnLoggedInView from '../../components/unlogged-in-view'
 import {AtNavBar} from 'taro-ui'
 import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
-import {loggedIn, login, logout, setUser} from '../../actions/login'
+import {loggedIn, login, logout, setUser, loginCancelled} from '../../actions/login'
 import LoggedInView from '../../components/logged-in-view'
 import User from '../../services/user'
 import './index.styl'
@@ -26,10 +26,10 @@ type PageStateProps = {
 }
 
 type PageDispatchProps = {
-  login: () => void;
-  logout: () => void;
-  setUser: (user) => void;
-  citiLogin: () => void;
+  login: () => void
+  logout: () => void
+  setUser: (user) => void
+  citiLogin: () => void
 }
 
 type PageOwnProps = {}
@@ -88,6 +88,7 @@ function popupLogic() {
       const interval = setInterval(() => {
         if (popup.closed) {
           console.log('hello')
+          dispatch(loginCancelled())
           clearInterval(interval)
         }
       }, 1000)
