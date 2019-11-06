@@ -1,9 +1,30 @@
 {
-  "extends": ["taro"],
+  "extends": [
+    "taro",
+    "prettier"
+  ],
   "rules": {
-    "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }]
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "Taro"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
+    "prettier/prettier": "error"
   },
   "parser": "babel-eslint",
-  "plugins": ["typescript"]
+  "plugins": [
+    "typescript",
+    "prettier"
+  ]
 }

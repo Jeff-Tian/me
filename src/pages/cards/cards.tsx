@@ -24,6 +24,6 @@ export default class Cards extends Component {
   }
 
   render() {
-    return <HardwayLayout><CardList/></HardwayLayout>
+    return <HardwayLayout><CardList /></HardwayLayout>
   }
 }
