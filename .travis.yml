@@ -20,6 +20,7 @@ script:
   - npm run e2e
   - npm run build
   - mkdir -p dist/pages/callback
+  - mkdir -p dist/pages/cards
   - cp -r dist/index.html dist/pages/callback/citi.html
   - cp -r dist/index.html dist/pages/cards/cards.html
   - ls dist
