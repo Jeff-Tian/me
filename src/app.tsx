@@ -1,12 +1,12 @@
-import "@tarojs/async-await";
-import Taro, { Component, Config } from "@tarojs/taro";
-import { Provider } from "@tarojs/redux";
+import '@tarojs/async-await'
+import Taro, {Component, Config} from '@tarojs/taro'
+import {Provider} from '@tarojs/redux'
 
-import Index from "./pages/index";
+import Index from './pages/index'
 
-import configStore from "./store";
+import configStore from './store'
 
-import "./app.styl";
+import './app.styl'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -14,7 +14,7 @@ import "./app.styl";
 //   require('nerv-devtools')
 // }
 
-const store = configStore();
+const store = configStore()
 
 class App extends Component {
   /**
@@ -25,14 +25,14 @@ class App extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    pages: ["pages/index/index", "pages/callback/citi"],
+    pages: ['pages/index/index', 'pages/callback/citi', 'pages/cards/cards'],
     window: {
-      backgroundTextStyle: "light",
-      navigationBarBackgroundColor: "#fff",
-      navigationBarTitleText: "WeChat",
-      navigationBarTextStyle: "black"
-    }
-  };
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+    },
+  }
 
   componentDidMount() {}
 
@@ -51,8 +51,8 @@ class App extends Component {
       <Provider store={store}>
         <Index />
       </Provider>
-    );
+    )
   }
 }
 
-Taro.render(<App />, document.getElementById("app"));
+Taro.render(<App />, document.getElementById('app'))

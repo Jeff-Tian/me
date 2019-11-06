@@ -1,7 +1,10 @@
 import {AtDrawer} from 'taro-ui'
 import Taro from '@tarojs/taro'
 
-const map = new Map<string, string>([['账号信息', '/'], ['卡片信息', 'cards']])
+const map = new Map<string, string>([
+  ['账号信息', '/'],
+  ['卡片信息', '/pages/cards/cards'],
+])
 
 export default function Drawer(props) {
   const onItemClick = async (index: number) => {
