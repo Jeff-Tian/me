@@ -10,6 +10,7 @@ import {loggedIn, login, logout, setUser, loginCancelled} from '../../actions/lo
 import LoggedInView from '../../components/logged-in-view'
 import User from '../../services/user'
 import './index.styl'
+import Drawer from '../layout/drawer'
 
 // #region 书写注意
 //
@@ -26,16 +27,17 @@ type PageStateProps = {
 }
 
 type PageDispatchProps = {
-  login: () => void
-  logout: () => void
-  setUser: (user) => void
-  citiLogin: () => void
+  login: () => void,
+  logout: () => void,
+  setUser: (user) => void,
+  citiLogin: () => void,
 }
 
 type PageOwnProps = {}
 
 type PageState = {
-  popup: any
+  popup: any,
+  showDrawer: boolean
 }
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps
@@ -56,10 +58,10 @@ function popupLogic() {
   } finally {
     popup.postMessage(
       'https://uniheart.herokuapp.com/passport/citi?redirect_uri=' +
-        encodeURIComponent(
-          location.origin + process.env.publicPath + 'pages/callback/citi'
-        ),
-      window.location.origin
+      encodeURIComponent(
+        location.origin + process.env.publicPath + 'pages/callback/citi',
+      ),
+      window.location.origin,
     )
   }
 }
@@ -97,15 +99,15 @@ function popupLogic() {
         popup = window.open()
         popup.document.write(
           '<html><head><title>第三方登录 我的个人中心</title></head><body><p>正在加载中, 请稍等' +
-            " ……</p><script>window.addEventListener('message', function (event) {\n" +
-            '    console.log(event.data);\n' +
-            '\n' +
-            "    if (event.data.indexOf('http://') === 0 || event.data.indexOf('https://') === 0 || event.data.indexOf('//') === 0) {\n" +
-            '        location.href = event.data;\n' +
-            '    }\n' +
-            '}, false);\n' +
-            '\n' +
-            "window.opener.postMessage('listenerLoaded', window.location.origin);</script></body></html>"
+          ' ……</p><script>window.addEventListener(\'message\', function (event) {\n' +
+          '    console.log(event.data);\n' +
+          '\n' +
+          '    if (event.data.indexOf(\'http://\') === 0 || event.data.indexOf(\'https://\') === 0 || event.data.indexOf(\'//\') === 0) {\n' +
+          '        location.href = event.data;\n' +
+          '    }\n' +
+          '}, false);\n' +
+          '\n' +
+          'window.opener.postMessage(\'listenerLoaded\', window.location.origin);</script></body></html>',
         )
 
         window.addEventListener(
@@ -153,13 +155,13 @@ function popupLogic() {
               return (popup || event.source).close()
             }
           },
-          false
+          false,
         )
       }
 
       popupLogic()
     },
-  })
+  }),
 )
 class Index extends Component {
   /**
@@ -177,25 +179,35 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
 
-  state: PageState = {popup: null}
+  state: PageState = {popup: null, showDrawer: false}
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+  }
 
   componentDidShow() {
     this.props.setUser(User.get() || Taro.getStorageSync('userInfo'))
   }
 
-  componentDidHide() {}
+  componentDidHide() {
+  }
 
   handleClick() {
     console.log(arguments)
+  }
+
+  showDrawer() {
+    this.setState({showDrawer: true})
+  }
+
+  onCloseDrawer() {
+    this.setState({showDrawer: false})
   }
 
   render() {
     return (
       <View className="index">
         <AtNavBar
-          onClickRgIconSt={this.handleClick}
+          onClickRgIconSt={this.showDrawer.bind(this)}
           onClickRgIconNd={this.handleClick}
           onClickLeftIcon={this.handleClick}
           color="#000"
@@ -212,6 +224,7 @@ class Index extends Component {
             <LoggedInView {...this.props} />
           )}
         </View>
+        <Drawer show={this.state.showDrawer} onClose={this.onCloseDrawer.bind(this)}/>
       </View>
     )
   }
