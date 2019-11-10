@@ -1,12 +1,12 @@
-import {View} from '@tarojs/components'
-import {connect} from '@tarojs/redux'
-import Taro, {Component, Config} from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import Taro, { Component, Config } from '@tarojs/taro'
 import querystring from 'querystring'
-import {ComponentClass} from 'react'
+import { ComponentClass } from 'react'
 import UnLoggedInView from '../../components/unlogged-in-view'
-import {AtNavBar} from 'taro-ui'
+import { AtNavBar } from 'taro-ui'
 import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
-import {loggedIn, login, logout, setUser, loginCancelled} from '../../actions/login'
+import { loggedIn, login, logout, setUser, loginCancelled } from '../../actions/login'
 import LoggedInView from '../../components/logged-in-view'
 import User from '../../services/user'
 import './index.styl'
@@ -23,7 +23,7 @@ import Drawer from '../layout/drawer'
 // #endregion
 
 type PageStateProps = {
-  index: {loading: false; user: null}
+  index: { loading: false; user: null }
 }
 
 type PageDispatchProps = {
@@ -31,6 +31,7 @@ type PageDispatchProps = {
   logout: () => void,
   setUser: (user) => void,
   citiLogin: () => void,
+  tokenLogin: () => void
 }
 
 type PageOwnProps = {}
@@ -67,7 +68,7 @@ function popupLogic() {
 }
 
 @connect(
-  ({index}) => ({
+  ({ index }) => ({
     index,
   }),
   dispatch => ({
@@ -112,7 +113,7 @@ function popupLogic() {
 
         window.addEventListener(
           'message',
-          async function(event) {
+          async function (event) {
             console.log('event = ', event)
             if (event.origin !== window.location.origin) {
               return
@@ -161,6 +162,9 @@ function popupLogic() {
 
       popupLogic()
     },
+    tokenLogin() {
+      
+    }
   }),
 )
 class Index extends Component {
@@ -179,7 +183,7 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
 
-  state: PageState = {popup: null, showDrawer: false}
+  state: PageState = { popup: null, showDrawer: false }
 
   componentWillUnmount() {
   }
@@ -196,11 +200,11 @@ class Index extends Component {
   }
 
   showDrawer() {
-    this.setState({showDrawer: true})
+    this.setState({ showDrawer: true })
   }
 
   onCloseDrawer() {
-    this.setState({showDrawer: false})
+    this.setState({ showDrawer: false })
   }
 
   render() {
@@ -221,10 +225,10 @@ class Index extends Component {
           {!this.props.index.user ? (
             <UnLoggedInView {...this.props} />
           ) : (
-            <LoggedInView {...this.props} />
-          )}
+              <LoggedInView {...this.props} />
+            )}
         </View>
-        <Drawer show={this.state.showDrawer} onClose={this.onCloseDrawer.bind(this)}/>
+        <Drawer show={this.state.showDrawer} onClose={this.onCloseDrawer.bind(this)} />
       </View>
     )
   }
