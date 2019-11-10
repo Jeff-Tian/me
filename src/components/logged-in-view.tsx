@@ -1,9 +1,10 @@
-import {View} from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import {AtButton, AtDivider} from 'taro-ui'
+import { AtButton, AtDivider } from 'taro-ui'
 import LoggedIn from './logged-in'
 
 import pack from '../../package.json'
+import BindOtherSocialAccounts from './bind'
 
 type LoggedInViewProps = {
   index: {
@@ -68,6 +69,7 @@ export default class LoggedInView extends Taro.Component<LoggedInViewProps,
     return (
       <View>
         <LoggedIn user={this.props.index.user} />
+        <AtDivider />
         <AtButton
           type='primary'
           onClick={this.issueToken.bind(this)}

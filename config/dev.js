@@ -15,6 +15,10 @@ module.exports = {
         'webpack-dev-server/client?http://localhost:10086',
         'webpack/hot/dev-server',
       ],
+      accounts: [
+        'webpack-dev-server/client?http://localhost:10086',
+        'webpack/hot/dev-server',
+      ],
       callback: [
         'webpack-dev-server/client?http://localhost:10086',
         'webpack/hot/dev-server',

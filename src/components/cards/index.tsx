@@ -5,12 +5,17 @@ export default function CardList() {
   const [cards, setCards] = useState([])
 
   useEffect(() => {
+    const tokenResult = Taro.getStorageSync('token')
     Taro.request({
-      url: 'https://uniheart.pa-ca.me/citi-dev/cards'
+      url: 'https://uniheart.pa-ca.me/citi-dev/cards',
+      header: {
+        Authorization: 'Bearer ' + tokenResult.token,
+        accept: 'application/json'
+      }
     }).then(response => {
       console.log('response = ', response)
     })
-  })
+  }, [])
 
   return (
     <View>
