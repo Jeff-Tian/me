@@ -1,6 +1,6 @@
-import Taro, {useState} from '@tarojs/taro'
-import {View} from '@tarojs/components'
-import {AtNavBar} from 'taro-ui'
+import Taro, { useState } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { AtNavBar, AtMessage } from 'taro-ui'
 import Drawer from './drawer'
 
 export default function HardwayLayout(props) {
@@ -11,6 +11,7 @@ export default function HardwayLayout(props) {
 
   return (
     <View className='index'>
+      <AtMessage />
       <AtNavBar
         onClickRgIconSt={onOpenDrawer}
         onClickRgIconNd={() => {

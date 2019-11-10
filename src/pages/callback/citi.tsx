@@ -1,11 +1,12 @@
-import {ComponentClass} from 'react'
-import Taro, {Component, Config} from '@tarojs/taro'
-import {View} from '@tarojs/components'
-import {connect} from '@tarojs/redux'
-import {AtNavBar} from 'taro-ui'
+import { ComponentClass } from 'react'
+import Taro, { Component, Config } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import { AtNavBar } from 'taro-ui'
 import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
 import querystring from 'querystring'
-import {login, setUser, loggedIn} from '../../actions/login'
+import { login, setUser } from '../../actions/login'
+import User from '../../services/user'
 
 // #region 书写注意
 //
@@ -31,7 +32,7 @@ interface Citi {
 }
 
 @connect(
-  ({}) => ({}),
+  ({ }) => ({}),
   dispatch => ({
     login() {
       dispatch(login())
@@ -40,30 +41,12 @@ interface Citi {
       dispatch(setUser(user))
     },
     citiLogin() {
-      var tokenResult = querystring.parse(window.location.search.substr(1))
-      console.log(tokenResult)
+      const tokenResult: any = querystring.parse(window.location.search.substr(1))
 
       if (tokenResult.token) {
-        dispatch(loggedIn(tokenResult.token))
-        Taro.setStorageSync('token', tokenResult)
-
-        Taro.request({
-          url: 'https://uniheart.pa-ca.me/jwt/user',
-          header: {
-            Authorization: 'Bearer ' + tokenResult.token,
-          },
-          method: 'GET',
-        })
-          .then(userInfo => {
-            dispatch(setUser(userInfo.data))
-            Taro.setStorageSync('userInfo', userInfo.data)
-            console.log('user set to : ', userInfo.data)
-          }, console.error)
-          .then(() => {
-            Taro.navigateTo({
-              url: '/',
-            }).then()
-          })
+        User
+          .loginByToken(dispatch)(tokenResult)
+          .then(Taro.navigateTo)
       }
     },
   }),

@@ -1,6 +1,6 @@
 import { UserAgentApplication } from "msal";
 import Taro from "@tarojs/taro";
-import { setUser } from "../actions/login";
+import { setUser, loggedIn, login } from "../actions/login";
 import Store from '../store'
 
 let userAgentApp: any;
@@ -83,5 +83,43 @@ export default class User {
 
   static logout() {
     userAgentApp.logout();
+  }
+
+  static loginByToken(dispatch: (action: { type: string }) => void) {
+    return async (tokenResult: { token: string, returnUrl?: string }) => {
+      dispatch(loggedIn(tokenResult.token))
+      Taro.setStorageSync('token', tokenResult)
+
+      try {
+        dispatch(login())
+        const userInfo = await Taro.request({
+          url: 'https://uniheart.pa-ca.me/jwt/user',
+          header: {
+            Authorization: 'Bearer ' + tokenResult.token,
+            accept: 'application/json'
+          },
+          method: 'GET',
+        })
+
+        dispatch(loggedIn(tokenResult.token))
+
+        dispatch(setUser(userInfo.data))
+        Taro.setStorageSync('userInfo', userInfo.data)
+
+        return { url: tokenResult.returnUrl || '/' }
+      } catch (response) {
+        let message = '发生了错误'
+        if (response.status === 401) {
+          message = '登录失败'
+          if (response.bodyUsed === false) {
+            message = await response.text()
+          }
+        }
+
+        Taro.atMessage({ message: message, type: 'error' })
+
+        dispatch(loggedIn(''))
+      }
+    }
   }
 }

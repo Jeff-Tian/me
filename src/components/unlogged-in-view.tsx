@@ -1,6 +1,6 @@
 import Taro, { useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtButton, AtDivider, AtInput, AtCurtain } from 'taro-ui'
+import { AtButton, AtDivider, AtInput, AtCurtain, AtMessage } from 'taro-ui'
 import './unlogged-in-view.styl'
 
 type UnLoggedInViewProps = {
@@ -19,6 +19,7 @@ export default function UnLoggedInView(props: UnLoggedInViewProps) {
 
   return (
     <View className='container-main'>
+      <AtMessage />
       <AtButton
         type='primary'
         onClick={props.login}
@@ -44,6 +45,8 @@ export default function UnLoggedInView(props: UnLoggedInViewProps) {
 
       <AtCurtain isOpened={askingForToken} onClose={hideTokenModal} closeBtnPosition="top-right">
         <AtInput
+          autoFocus={true}
+          focus={true}
           name='token'
           title='请输入令牌'
           type='text'

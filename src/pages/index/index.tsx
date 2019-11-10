@@ -163,7 +163,8 @@ function popupLogic() {
       popupLogic()
     },
     tokenLogin(token: string) {
-      console.log('token = ', token)
+      dispatch(login())
+      User.loginByToken(dispatch)({ token }).then()
     }
   }),
 )
