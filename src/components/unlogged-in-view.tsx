@@ -1,21 +1,20 @@
 import Taro, { useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtButton, AtDivider, AtModal } from 'taro-ui'
+import { AtButton, AtDivider, AtInput, AtCurtain } from 'taro-ui'
+import './unlogged-in-view.styl'
 
 type UnLoggedInViewProps = {
   login: () => void,
   index: { loading: boolean },
   citiLogin: () => void,
-  tokenLogin: () => void
+  tokenLogin: (token: string) => void
 }
 
 export default function UnLoggedInView(props: UnLoggedInViewProps) {
   const [askingForToken, setAskForToken] = useState(false)
+  const [token, setToken] = useState('')
 
-  const showTokenModal = () => {
-    setAskForToken(true)
-    // props.tokenLogin()
-  }
+  const showTokenModal = () => setAskForToken(true)
   const hideTokenModal = () => setAskForToken(false)
 
   return (
@@ -43,7 +42,21 @@ export default function UnLoggedInView(props: UnLoggedInViewProps) {
       <AtDivider />
       <AtButton onClick={showTokenModal} loading={props.index.loading}>令牌登录</AtButton>
 
-      <AtModal isOpened={askingForToken} title="令牌登录" cancelText="取消" confirmText="确认" content="请输入令牌" onClose={hideTokenModal} onCancel={hideTokenModal} onConfirm={hideTokenModal} />
+      <AtCurtain isOpened={askingForToken} onClose={hideTokenModal} closeBtnPosition="top-right">
+        <AtInput
+          name='token'
+          title='请输入令牌'
+          type='text'
+          placeholder='令牌'
+          value={token}
+          onChange={t => { setToken(String(t)) }}
+        />
+        <AtDivider />
+        <AtButton type="primary" onClick={() => {
+          props.tokenLogin(token)
+          hideTokenModal()
+        }}>登录</AtButton>
+      </AtCurtain>
     </View>
   )
 }

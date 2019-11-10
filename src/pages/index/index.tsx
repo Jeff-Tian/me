@@ -162,8 +162,8 @@ function popupLogic() {
 
       popupLogic()
     },
-    tokenLogin() {
-      
+    tokenLogin(token: string) {
+      console.log('token = ', token)
     }
   }),
 )
