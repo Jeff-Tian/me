@@ -1,5 +1,6 @@
-import Taro, { useState, useEffect } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import Taro, {useState, useEffect} from '@tarojs/taro'
+import {View, Text} from '@tarojs/components'
+import {AtCard} from 'taro-ui'
 
 export default function CardList() {
   const [cards, setCards] = useState([])
@@ -10,16 +11,18 @@ export default function CardList() {
       url: 'https://uniheart.pa-ca.me/citi-dev/cards',
       header: {
         Authorization: 'Bearer ' + tokenResult.token,
-        accept: 'application/json'
-      }
+        accept: 'application/json',
+      },
     }).then(response => {
-      console.log('response = ', response)
+      setCards(response.data.cardDetails)
     })
   }, [])
 
   return (
     <View>
-      <Text>Hello</Text>
+      {cards.map(c => (
+        <AtCard>{JSON.stringify(c)}</AtCard>
+      ))}
     </View>
   )
 }
