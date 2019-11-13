@@ -13,7 +13,7 @@ export default async function screenRecording(
   frames = 15
 ) {
   console.log('start recording...')
-  await sleep(5)
+  await sleep(2)
   process.stdout.write('taking screenshots: .')
 
   for (let i = 1; i < frames; ++i) {
