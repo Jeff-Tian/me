@@ -8,6 +8,7 @@ services:
 
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - npm i
 
 cache:
   directories:
