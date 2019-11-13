@@ -1,5 +1,5 @@
 import Taro, {useState, useEffect} from '@tarojs/taro'
-import {View, Text} from '@tarojs/components'
+import {View} from '@tarojs/components'
 import {AtCard} from 'taro-ui'
 
 export default function CardList() {

@@ -1,8 +1,8 @@
 {
-  "extends": [
-    "taro",
-    "prettier"
-  ],
+  "env": {
+    "jest": true
+  },
+  "extends": ["taro", "prettier"],
   "rules": {
     "no-unused-vars": [
       "error",
@@ -13,18 +13,11 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".tsx"
-        ]
+        "extensions": [".js", ".jsx", ".tsx"]
       }
     ],
     "prettier/prettier": "error"
   },
   "parser": "babel-eslint",
-  "plugins": [
-    "typescript",
-    "prettier"
-  ]
+  "plugins": ["typescript", "prettier"]
 }
