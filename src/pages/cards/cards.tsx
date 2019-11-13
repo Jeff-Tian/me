@@ -8,22 +8,21 @@ export default class Cards extends Component {
     navigationBarTitleText: '卡片信息',
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
-  componentDidShow() {
-  }
+  componentDidShow() {}
 
-  componentDidHide() {
-  }
+  componentDidHide() {}
 
   render() {
-    return <HardwayLayout><CardList /></HardwayLayout>
+    return (
+      <HardwayLayout>
+        <CardList />
+      </HardwayLayout>
+    )
   }
 }
