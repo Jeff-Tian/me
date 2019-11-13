@@ -1,6 +1,6 @@
 {
   "name": "@jeff-tian/me",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "我的个人中心",
   "scripts": {
     "build:weapp": "taro build --type weapp",
@@ -17,7 +17,8 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "dev:rn": "npm run build:rn -- --watch",
     "e2e": "jest --config jest.config.js --detectOpenHandles",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "semantic-release": "semantic-release"
   },
   "author": "jeff.tian@outlook.com",
   "homepage": "https://pa-ca.me/",
@@ -83,6 +84,14 @@
     "puppeteer-core": "^2.0.0",
     "taro": "*",
     "ts-jest": "^24.1.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "semantic-release": "^15.13.30"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeff-Tian/me.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
