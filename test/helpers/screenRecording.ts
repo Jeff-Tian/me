@@ -3,7 +3,7 @@ import fs from 'fs'
 import GIFEncoder from 'gifencoder'
 import pngFileStream from 'png-file-stream'
 
-export const sleep = (seconds: number) =>
+export const sleep = seconds =>
   new Promise(resolve => setTimeout(resolve, seconds))
 
 export default async function screenRecording(
