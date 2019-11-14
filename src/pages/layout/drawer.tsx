@@ -1,16 +1,17 @@
-import { AtDrawer } from 'taro-ui'
-import Taro from '@tarojs/taro'
+import { AtDrawer } from "taro-ui";
+import Taro from "@tarojs/taro";
 
 const map = new Map<string, string>([
-  ['账号信息', '/'],
-  ['账号绑定', '/pages/accounts/bind'],
-  ['卡片信息', '/pages/cards/cards'],
-])
+  ["账号信息", "/"],
+  ["账号绑定", "/pages/accounts/bind"],
+  ["卡片信息", "/pages/cards/cards"],
+  ["产品列表", "/pages/cards/product-list"]
+]);
 
 export default function Drawer(props) {
   const onItemClick = async (index: number) => {
-    await Taro.navigateTo({ url: [...map.values()][index] })
-  }
+    await Taro.navigateTo({ url: [...map.values()][index] });
+  };
 
   return (
     <AtDrawer
@@ -21,5 +22,5 @@ export default function Drawer(props) {
       items={[...map.keys()]}
       onItemClick={onItemClick}
     />
-  )
+  );
 }
