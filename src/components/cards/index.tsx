@@ -23,10 +23,7 @@ function CardList({ dispatch }) {
         accept: "application/json"
       }
     }).then(
-      response => {
-        console.log("done");
-        setCards(response.data.cardDetails);
-      },
+      response => setCards(response.data.cardDetails),
       error => {
         console.error("错误：", error);
 
