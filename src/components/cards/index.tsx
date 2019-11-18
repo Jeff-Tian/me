@@ -16,27 +16,30 @@ function CardList({ dispatch }) {
 
   useEffect(() => {
     const tokenResult = Taro.getStorageSync("token");
+    Taro.showLoading({ title: "加载中……" });
     Taro.request({
       url: "https://uniheart.pa-ca.me/citi-dev/cards",
       header: {
         Authorization: "Bearer " + tokenResult.token,
         accept: "application/json"
       }
-    }).then(
-      response => setCards(response.data.cardDetails),
-      error => {
-        console.error("错误：", error);
+    })
+      .then(
+        response => setCards(response.data.cardDetails),
+        error => {
+          console.error("错误：", error);
 
-        if (error.message === "Failed to fetch") {
-          try {
-            citilogin(dispatch);
-          } catch (ex) {
-            console.error(ex);
-            setShowAuthModal(true);
+          if (error.message === "Failed to fetch") {
+            try {
+              citilogin(dispatch);
+            } catch (ex) {
+              console.error(ex);
+              setShowAuthModal(true);
+            }
           }
         }
-      }
-    );
+      )
+      .finally(Taro.hideLoading);
   }, []);
 
   return (

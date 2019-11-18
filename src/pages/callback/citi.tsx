@@ -1,12 +1,12 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import { AtNavBar } from 'taro-ui'
-import 'taro-ui/dist/style/index.scss' // 引入组件样式 - 方式一
-import querystring from 'querystring'
-import { login, setUser } from '../../actions/login'
-import User from '../../services/user'
+import { ComponentClass } from "react";
+import Taro, { Component, Config } from "@tarojs/taro";
+import { View } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
+import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
+import querystring from "querystring";
+import { login, setUser } from "../../actions/login";
+import User from "../../services/user";
+import HardwayLayout from "../layout";
 
 // #region 书写注意
 //
@@ -19,37 +19,37 @@ import User from '../../services/user'
 // #endregion
 
 type PageDispatchProps = {
-  login: () => void
-  logout: () => void
-  setUser: (user) => void
-  citiLogin: () => void
-}
+  login: () => void;
+  logout: () => void;
+  setUser: (user) => void;
+  citiLogin: () => void;
+};
 
-type IProps = PageDispatchProps
+type IProps = PageDispatchProps;
 
 interface Citi {
-  props: IProps
+  props: IProps;
 }
 
 @connect(
-  ({ }) => ({}),
+  ({}) => ({}),
   dispatch => ({
     login() {
-      dispatch(login())
+      dispatch(login());
     },
     setUser(user) {
-      dispatch(setUser(user))
+      dispatch(setUser(user));
     },
     citiLogin() {
-      const tokenResult: any = querystring.parse(window.location.search.substr(1))
+      const tokenResult: any = querystring.parse(
+        window.location.search.substr(1)
+      );
 
       if (tokenResult.token) {
-        User
-          .loginByToken(dispatch)(tokenResult)
-          .then(Taro.navigateTo)
+        User.loginByToken(dispatch)(tokenResult).then(Taro.navigateTo);
       }
-    },
-  }),
+    }
+  })
 )
 class Citi extends Component {
   /**
@@ -60,56 +60,33 @@ class Citi extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '我的个人中心',
-  }
+    navigationBarTitleText: "花旗账号登录中，请稍等…… | 我的个人中心"
+  };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps)
+    console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   componentDidShow() {
     if (window.opener) {
-      window.opener.postMessage(window.location.search, window.location.origin)
+      window.opener.postMessage(window.location.search, window.location.origin);
     }
 
-    this.props.citiLogin()
+    this.props.citiLogin();
   }
 
-  componentDidHide() {
-  }
-
-  handleClick() {
-    console.log(arguments)
-  }
-
-  async handleLeftClick() {
-    await Taro.navigateTo({
-      url: '/',
-    })
-  }
+  componentDidHide() {}
 
   render() {
     return (
-      <View className="index">
-        <AtNavBar
-          onClickRgIconSt={this.handleClick}
-          onClickRgIconNd={this.handleClick}
-          onClickLeftIcon={this.handleLeftClick}
-          color="#000"
-          title="我的个人中心"
-          leftText="返回"
-          leftIconType="chevron-left"
-          rightFirstIconType="bullet-list"
-          rightSecondIconType="user"
-        />
+      <HardwayLayout>
         <View className="container">
           <p>登录成功，窗口即将关闭……</p>
         </View>
-      </View>
-    )
+      </HardwayLayout>
+    );
   }
 }
 
@@ -120,4 +97,4 @@ class Citi extends Component {
 //
 // #endregion
 
-export default Citi as ComponentClass
+export default Citi as ComponentClass;

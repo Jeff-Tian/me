@@ -1,7 +1,7 @@
 import { UserAgentApplication } from "msal";
 import Taro from "@tarojs/taro";
 import { setUser, loggedIn, login } from "../actions/login";
-import Store from '../store'
+import Store from "../store";
 
 let userAgentApp: any;
 let applicationConfig: any;
@@ -25,19 +25,19 @@ if (process.env.TARO_ENV === "h5") {
     b2cScopes: []
   };
 
-  const store = Store()
+  const store = Store();
 
   userAgentApp = {
-    getUser: function () {
-      return Taro.getStorageSync('userInfo');
+    getUser: function() {
+      return Taro.getStorageSync("userInfo");
     },
 
     logout: () => {
-      Taro.setStorageSync('userInfo', null);
+      Taro.setStorageSync("userInfo", null);
       store.dispatch(setUser(null));
     },
 
-    loginRedirect: function () {
+    loginRedirect: function() {
       return Taro.login({
         timeout: 3000
       })
@@ -52,9 +52,9 @@ if (process.env.TARO_ENV === "h5") {
           //   duration: 25000,
           //   icon: "none"
           // });
-          store.dispatch(setUser(wechatInfo))
+          store.dispatch(setUser(wechatInfo));
 
-          Taro.setStorageSync('userInfo', wechatInfo)
+          Taro.setStorageSync("userInfo", wechatInfo);
           return wechatInfo;
         })
         .catch(async error => {
@@ -86,40 +86,44 @@ export default class User {
   }
 
   static loginByToken(dispatch: (action: { type: string }) => void) {
-    return async (tokenResult: { token: string, returnUrl?: string }) => {
-      dispatch(loggedIn(tokenResult.token))
-      Taro.setStorageSync('token', tokenResult)
+    return async (tokenResult: { token: string; returnUrl?: string }) => {
+      dispatch(loggedIn(tokenResult.token));
+      Taro.setStorageSync("token", tokenResult);
 
       try {
-        dispatch(login())
+        dispatch(login());
         const userInfo = await Taro.request({
-          url: 'https://uniheart.pa-ca.me/jwt/user',
+          url: "https://uniheart.pa-ca.me/jwt/user",
           header: {
-            Authorization: 'Bearer ' + tokenResult.token,
-            accept: 'application/json'
+            Authorization: "Bearer " + tokenResult.token,
+            accept: "application/json"
           },
-          method: 'GET',
-        })
+          method: "GET"
+        });
 
-        dispatch(loggedIn(tokenResult.token))
+        dispatch(loggedIn(tokenResult.token));
 
-        dispatch(setUser(userInfo.data))
-        Taro.setStorageSync('userInfo', userInfo.data)
+        dispatch(setUser(userInfo.data));
+        Taro.setStorageSync("userInfo", userInfo.data);
 
-        return { url: tokenResult.returnUrl || '/' }
+        return { url: tokenResult.returnUrl || "/" };
       } catch (response) {
-        let message = '发生了错误'
+        console.error("碰到了错误：", response);
+        let message = "发生了错误";
         if (response.status === 401) {
-          message = '登录失败'
-          if (response.bodyUsed === false) {
-            message = await response.text()
+          message = "登录失败";
+          if (!response.bodyUsed) {
+            message = await response.text();
           }
         }
 
-        Taro.atMessage({ message: message, type: 'error' })
+        await Taro.showModal({
+          title: "出错了",
+          content: message
+        });
 
-        dispatch(loggedIn(''))
+        dispatch(loggedIn(""));
       }
-    }
+    };
   }
 }
