@@ -92,7 +92,10 @@ export default dispatch => {
 
             let returnPath = Taro.getStorageSync("returnPath");
             console.log("即将跳转到：", returnPath);
-            await Taro.navigateTo({ url: returnPath });
+            await Taro.navigateTo({
+              url: returnPath,
+              success: () => Taro.removeStorageSync("returnPath")
+            });
           } catch (ex) {
             console.error(ex);
           }

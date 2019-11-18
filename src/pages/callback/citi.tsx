@@ -54,6 +54,9 @@ interface Citi {
                 url: returnPath,
                 fail: async () => {
                   await Taro.navigateTo(returnObj);
+                },
+                success: () => {
+                  Taro.removeStorageSync("returnPath");
                 }
               });
             } else {
