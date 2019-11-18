@@ -18,7 +18,16 @@
       captureUncaught: true,
       captureUnhandledRejections: true,
       payload: {
-        environment: "production"
+        environment: "production",
+        client: {
+          javascript: {
+            source_map_enabled: true, //this is now true by default
+            code_version: "f147162cbd8d5b0a9c3591752c1440eb62da8221",
+            // Optionally have Rollbar guess which frames the error was thrown from
+            // when the browser does not provide line and column numbers.
+            guess_uncaught_frames: true
+          }
+        }
       }
     };
     // Rollbar Snippet
@@ -28,5 +37,5 @@
 <link href="/css/app.css" rel="stylesheet"></head>
 <body>
   <div id="app"></div>
-<script type="text/javascript" src="/lib/lib.dll.js"></script><script type="text/javascript" src="/js/app.js"></script></body>
+<script type="text/javascript" src="/js/app.js"></script></body>
 </html>
