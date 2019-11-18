@@ -8,7 +8,7 @@ services:
 
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - npm i
+  - yarn install
 
 cache:
   directories:
