@@ -16,6 +16,12 @@ function CardList({ dispatch }) {
 
   useEffect(() => {
     const tokenResult = Taro.getStorageSync("token");
+
+    if (!tokenResult || !tokenResult.token) {
+      setShowAuthModal(true);
+      return;
+    }
+
     Taro.showLoading({ title: "加载中……" }).then();
     Taro.request({
       url: "https://uniheart.pa-ca.me/citi-dev/cards",
