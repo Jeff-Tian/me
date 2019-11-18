@@ -13,6 +13,6 @@ module.exports = {
       basename: url.pathname
     },
     entry: {},
-    enableSourceMap: true
+    enableSourceMap: false
   }
 };
