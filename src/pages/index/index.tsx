@@ -3,14 +3,13 @@ import { connect } from "@tarojs/redux";
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ComponentClass } from "react";
 import UnLoggedInView from "../../components/unlogged-in-view";
-import { AtNavBar } from "taro-ui";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
 import citilogin from "../../services/citi-login";
 import { login, logout, setUser } from "../../actions/login";
 import LoggedInView from "../../components/logged-in-view";
 import User from "../../services/user";
 import "./index.styl";
-import Drawer from "../layout/drawer";
+import HardwayLayout from "../layout";
 
 // #region 书写注意
 //
@@ -114,18 +113,7 @@ class Index extends Component {
 
   render() {
     return (
-      <View className="index">
-        <AtNavBar
-          onClickRgIconSt={this.showDrawer.bind(this)}
-          onClickRgIconNd={this.handleClick}
-          onClickLeftIcon={this.handleClick}
-          color="#000"
-          title="我的个人中心"
-          leftText="返回"
-          leftIconType="chevron-left"
-          rightFirstIconType="bullet-list"
-          rightSecondIconType="user"
-        />
+      <HardwayLayout>
         <View className="container">
           {!this.props.index.user ? (
             <UnLoggedInView {...this.props} />
@@ -133,11 +121,7 @@ class Index extends Component {
             <LoggedInView {...this.props} />
           )}
         </View>
-        <Drawer
-          show={this.state.showDrawer}
-          onClose={this.onCloseDrawer.bind(this)}
-        />
-      </View>
+      </HardwayLayout>
     );
   }
 }

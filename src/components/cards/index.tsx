@@ -57,7 +57,9 @@ function CardList({ dispatch }) {
 
       <AtModal isOpened={showAuthModal}>
         <AtModalHeader>请授权</AtModalHeader>
-        <AtModalContent>您的授权已过期，需要重新授权。</AtModalContent>
+        <AtModalContent>
+          您还没有授权，或者之前的授权已过期，需要重新授权。
+        </AtModalContent>
         <AtModalAction>
           <Button onClick={() => setShowAuthModal(false)}>取消</Button>
           <Button
