@@ -12,6 +12,7 @@ module.exports = {
     router: {
       basename: url.pathname
     },
-    entry: {}
+    entry: {},
+    enableSourceMap: true
   }
 };
