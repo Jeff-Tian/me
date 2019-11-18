@@ -35,16 +35,6 @@ script:
   - docker ps | grep -q me
   - docker push "$DOCKER_USERNAME"/me
 
-deploy:
-  - provider: pages
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
-    keep-history: true
-    local_dir: dist
-    on:
-      branch: master
-    fqdn: pa-ca.me
-
 jobs:
   include:
     # Define the release stage that runs semantic-release
@@ -53,7 +43,15 @@ jobs:
       # Advanced: optionally overwrite your default `script` step to skip the tests
       # script: skip
       deploy:
-        provider: script
-        skip_cleanup: true
-        script:
-          - npx semantic-release
+        - provider: script
+          skip_cleanup: true
+          script:
+            - npx semantic-release
+        - provider: pages
+          skip-cleanup: true
+          github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
+          keep-history: true
+          local_dir: dist
+          on:
+            branch: master
+          fqdn: pa-ca.me
