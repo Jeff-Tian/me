@@ -46,7 +46,21 @@ interface Citi {
       );
 
       if (tokenResult.token) {
-        User.loginByToken(dispatch)(tokenResult).then(Taro.navigateTo);
+        User.loginByToken(dispatch)(tokenResult).then(
+          async (returnObj: any) => {
+            const returnPath = Taro.getStorageSync("returnPath");
+            if (returnPath) {
+              await Taro.navigateTo({
+                url: returnPath,
+                fail: async () => {
+                  await Taro.navigateTo(returnObj);
+                }
+              });
+            } else {
+              await Taro.navigateTo(returnObj);
+            }
+          }
+        );
       }
     }
   })

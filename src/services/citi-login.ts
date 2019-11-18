@@ -30,6 +30,7 @@ function popupLogic() {
 }
 
 export default dispatch => {
+  Taro.setStorageSync("returnPath", window.location.pathname);
   dispatch(login());
 
   const interval = setInterval(() => {
@@ -88,6 +89,10 @@ export default dispatch => {
             });
 
             dispatch(setUser(userInfo.data));
+
+            let returnPath = Taro.getStorageSync("returnPath");
+            console.log("即将跳转到：", returnPath);
+            await Taro.navigateTo({ url: returnPath });
           } catch (ex) {
             console.error(ex);
           }
