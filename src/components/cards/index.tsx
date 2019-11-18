@@ -29,7 +29,10 @@ function CardList({ dispatch }) {
         error => {
           console.error("错误：", error);
 
-          if (error.message === "Failed to fetch") {
+          if (
+            error.message === "Failed to fetch" ||
+            error.statusText === "Unauthorized"
+          ) {
             try {
               citilogin(dispatch);
             } catch (ex) {
