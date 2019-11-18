@@ -18,11 +18,11 @@ function popupLogic() {
     if (popup) {
       popup.postMessage(
         "https://uniheart.herokuapp.com/passport/citi?redirect_uri=" +
-          encodeURIComponent(
-            window.location.origin +
-              process.env.publicPath +
-              "pages/callback/citi"
-          ),
+        encodeURIComponent(
+          window.location.origin +
+          process.env.publicPath +
+          "pages/callback/citi"
+        ),
         window.location.origin
       );
     }
@@ -43,7 +43,7 @@ export default dispatch => {
       console.log("login cancelled!");
       dispatch(loginCancelled());
       clearInterval(interval);
-      window.location.reload();
+      Taro.navigateTo({ url: window.location.pathname });
     }
   }, 1000);
 
@@ -57,7 +57,7 @@ export default dispatch => {
 
   window.addEventListener(
     "message",
-    async function(event) {
+    async function (event) {
       console.log("event = ", event);
       if (event.origin !== window.location.origin) {
         return;
