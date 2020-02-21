@@ -11,3 +11,4 @@
 *.tsx text eol=lf
 Dockerfile text eol=lf
 .dockerignore text eol=lf
+*.html text eol=lf
