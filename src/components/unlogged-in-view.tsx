@@ -2,6 +2,7 @@ import Taro, { useState } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtButton, AtDivider, AtInput, AtCurtain, AtMessage } from "taro-ui";
 import "./unlogged-in-view.styl";
+import UniUserContainer, { LoginStatus } from 'uni-user';
 
 type UnLoggedInViewProps = {
   login: () => void;
@@ -20,6 +21,8 @@ export default function UnLoggedInView(props: UnLoggedInViewProps) {
   return (
     <View className="container-main">
       <AtMessage />
+      <UniUserContainer><LoginStatus /></UniUserContainer>
+      <AtDivider />
       <AtButton
         type="primary"
         onClick={props.login}
