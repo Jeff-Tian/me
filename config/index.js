@@ -63,6 +63,9 @@ const config = {
           browsers: ["last 3 versions", "Android >= 4.1", "ios >= 8"]
         }
       }
+    },
+    router: {
+      mode: "browser"
     }
   }
 };
