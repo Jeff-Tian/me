@@ -33,8 +33,9 @@ const config = {
     options: {}
   },
   mini: {
+    // eslint-disable-next-line no-unused-vars
     webpackChain(chain, webpack) {
-      console.log(chain, webpack);
+      // console.log(chain, webpack);
     },
     cssLoaderOption: {},
     postcss: {
@@ -53,8 +54,9 @@ const config = {
   h5: {
     publicPath: "/",
     staticDirectory: "static",
+    // eslint-disable-next-line no-unused-vars
     webpackChain(chain, webpack) {
-      console.log(chain, webpack);
+      // console.log(chain, webpack);
     },
     postcss: {
       autoprefixer: {
@@ -70,7 +72,7 @@ const config = {
   }
 };
 
-module.exports = function (merge) {
+module.exports = function(merge) {
   console.log("NODE_ENV ========================= ", process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));

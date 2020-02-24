@@ -1,5 +1,5 @@
 import { Provider } from "@tarojs/redux";
-import configStore from '../store/uni-user';
+import configStore from '../../store/uni-user';
 
 const store = configStore()
 
