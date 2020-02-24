@@ -32,7 +32,7 @@ interface Citi {
 }
 
 @connect(
-  ({}) => ({}),
+  ({ }) => ({}),
   dispatch => ({
     login() {
       dispatch(login());
@@ -84,7 +84,7 @@ class Citi extends Component {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     if (window.opener) {
@@ -94,7 +94,7 @@ class Citi extends Component {
     this.props.citiLogin();
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   render() {
     return (
