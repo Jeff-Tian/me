@@ -1,7 +1,8 @@
 import { connect } from '@tarojs/redux';
-import { setLoading, setUser, setChecking } from '../actions/login';
+import { setLoading, setUser, setChecking } from '../../actions/login';
 import { ComponentClass } from "react";
 import { UniUser } from 'uni-user';
+import LoginButton from './login-button';
 
 type LoginStatusProps = {
     checking: boolean;
@@ -34,7 +35,7 @@ class LoginStatus extends Taro.Component {
     render() {
         const { checking, hasLoggedIn } = this.props;
 
-        return !checking ? (hasLoggedIn ? <div>已登录</div> : <div>请登录</div>) : <p>查询登录状态中……</p>;
+        return !checking ? (hasLoggedIn ? <div>已登录</div> : <LoginButton returnUrl="" />) : <p>查询 Uni 登录状态中……</p>;
     }
 }
 
