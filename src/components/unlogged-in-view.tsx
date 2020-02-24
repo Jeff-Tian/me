@@ -2,7 +2,8 @@ import Taro, { useState } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtButton, AtDivider, AtInput, AtCurtain, AtMessage } from "taro-ui";
 import "./unlogged-in-view.styl";
-import UniUserContainer, { LoginStatus } from 'uni-user';
+import UniUserContainer from './UniUserContainer';
+import LoginStatus from './login-status';
 
 type UnLoggedInViewProps = {
   login: () => void;
