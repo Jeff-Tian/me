@@ -30,7 +30,6 @@ class App extends Component {
       "pages/cards/cards",
       "pages/cards/product-list",
       "pages/accounts/bind",
-      "pages/test/index"
     ],
     window: {
       backgroundTextStyle: "light",
