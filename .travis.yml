@@ -24,6 +24,7 @@ script:
   - mkdir -p dist/pages/cards
   - mkdir -p dist/pages/accounts
   - cp -r dist/index.html dist/pages/callback/citi.html
+  - cp -r dist/index.html dist/pages/callback/uni.html
   - cp -r dist/index.html dist/pages/cards/cards.html
   - cp -r dist/index.html dist/pages/cards/product-list.html
   - cp -r dist/index.html dist/pages/accounts/bind.html

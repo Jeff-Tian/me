@@ -45,7 +45,7 @@ class LoginButton extends Taro.Component {
             LoginViaPopup(w, ssoUrl)(dispatch);
         }
 
-        return <AtButton onClick={gotoLoginPage} type="primary" loading={loading}>登录</AtButton>
+        return <AtButton onClick={gotoLoginPage} type="primary" loading={loading}>Uni 登录</AtButton>
     }
 }
 

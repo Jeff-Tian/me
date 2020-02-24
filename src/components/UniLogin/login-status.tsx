@@ -35,7 +35,7 @@ class LoginStatus extends Taro.Component {
     render() {
         const { checking, hasLoggedIn } = this.props;
 
-        return !checking ? (hasLoggedIn ? <div>已登录</div> : <LoginButton returnUrl="" />) : <p>查询 Uni 登录状态中……</p>;
+        return !checking ? (hasLoggedIn ? <div>已登录</div> : <LoginButton returnUrl={`${location.origin}/pages/callback/uni`} />) : <p>查询 Uni 登录状态中……</p>;
     }
 }
 

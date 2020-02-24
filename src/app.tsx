@@ -28,6 +28,7 @@ class App extends Component {
     pages: [
       "pages/index/index",
       "pages/callback/citi",
+      "pages/callback/uni",
       "pages/cards/cards",
       "pages/cards/product-list",
       "pages/accounts/bind"
